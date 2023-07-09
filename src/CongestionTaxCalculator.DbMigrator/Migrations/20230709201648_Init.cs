@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -34,6 +35,30 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tariffs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FromTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    ToTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TariffNO = table.Column<int>(type: "int", nullable: false),
+                    DefineTariffYear = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tariffs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tariffs_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,6 +98,11 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tariffs_CityId",
+                table: "Tariffs",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_VehicleType",
                 table: "Vehicles",
                 column: "VehicleType",
@@ -86,10 +116,13 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 name: "CityVehicles");
 
             migrationBuilder.DropTable(
-                name: "Cities");
+                name: "Tariffs");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
         }
     }
 }

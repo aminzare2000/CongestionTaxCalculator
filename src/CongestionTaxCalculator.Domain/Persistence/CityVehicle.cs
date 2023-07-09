@@ -6,10 +6,10 @@ namespace CongestionTaxCalculator.Domain.Persistence
 {
     public class CityVehicle
     {
-        public  City City { get; set; } = new City();
+        public City City { get; set; } = new City();
         public int CityId { get; set; }
 
-        public  Vehicle Vehicle { get; set; } = new Vehicle();
+        public Vehicle Vehicle { get; set; } = new Vehicle();
         public int VehicleId { get; set; }
         public bool IsExempt { get; set; } = false;
 

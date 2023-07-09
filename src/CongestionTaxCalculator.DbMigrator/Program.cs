@@ -16,8 +16,8 @@ namespace CongestionTaxCalculator.DbMigrator
                                                 {
                                                     var logger = services.GetService<ILogger<CongestionTaxContextSeed>>();
                                                     CongestionTaxContextSeed
-                                                        .SeedAsync(context, logger)
-                                                        .Wait();
+                                                    .SeedAsync(context, logger)
+                                                    .Wait();
                                                 })
                 .Start();
            

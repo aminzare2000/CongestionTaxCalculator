@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using CongestionTaxCalculator.Domain.Persistence;
+using CongestionTaxCalculator.Domain.Persistence.Configuration;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using CongestionTaxCalculator.Infrastructure;
 
 namespace CongestionTaxCalculator.DbMigrator.Data
 {
@@ -17,55 +19,52 @@ namespace CongestionTaxCalculator.DbMigrator.Data
 
         public DbSet<City> Cities => Set<City>();
         public DbSet<Vehicle> Vehicles => Set<Vehicle>();
-
         public DbSet<CityVehicle> CityVehicles => Set<CityVehicle>();
+        public DbSet<Tariff> Tariffs => Set<Tariff>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-
+            builder.ApplyConfiguration(new CityConfiguration());
+            builder.ApplyConfiguration(new VehicleConfiguration());
+            builder.ApplyConfiguration(new CityVehicleConfiguration());
+            builder.ApplyConfiguration(new TariffConfiguration());
 
 
             /* Configure your own tables/entities inside here */
 
 
 
-            builder.Entity<City>()
-                            .Property(c => c.Name)
-                            .HasMaxLength(500);
+            //builder.Entity<City>()
+            //                .Property(c => c.Name)
+            //                .HasMaxLength(500);
 
-            builder.Entity<City>()
-                .HasIndex(c => c.Name).IsUnique();
+            //builder.Entity<City>()
+            //    .HasIndex(c => c.Name).IsUnique();
 
-            builder.Entity<Vehicle>()
-                            .Property(v => v.VehicleType)
-                            .HasMaxLength(50);
+            //builder.Entity<Vehicle>()
+            //                .Property(v => v.VehicleType)
+            //                .HasMaxLength(50);
 
-            builder.Entity<Vehicle>()
-                            .HasIndex(v => v.VehicleType).IsUnique();
+            //builder.Entity<Vehicle>()
+            //                .HasIndex(v => v.VehicleType).IsUnique();
 
-            builder.Entity<City>().HasMany(x => x.CityVehicles).WithOne(x => x.City).HasForeignKey(x => x.CityId);
-            builder.Entity<Vehicle>().HasMany(x => x.CityVehicles).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId);
-            builder.Entity<CityVehicle>().HasKey(x => new { x.CityId, x.VehicleId });
+            //builder.Entity<City>().HasMany(x => x.CityVehicles).WithOne(x => x.City).HasForeignKey(x => x.CityId);
+            //builder.Entity<Vehicle>().HasMany(x => x.CityVehicles).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId);
+            //builder.Entity<CityVehicle>().HasKey(x => new { x.CityId, x.VehicleId });
+
+
+
+
         }
 
-
-
-        //protected override async void OnModelCreating(ModelBuilder modelBuilder)
+        //protected override void ConfigureConventions(ModelConfigurationBuilder builder)
         //{
-        //    base.OnModelCreating(modelBuilder);
+        //    base.ConfigureConventions(builder);
 
-        //    modelBuilder.Entity<Customer>().HasData
-        //    if (!(await Customers.AnyAsync()))
-        //    {
-        //        await Customers.AddRangeAsync(CustomerGenerator.GenerateCustomers());
-        //        await SaveChangesAsync();
-
-        //    }
-
+        //    builder.Properties<TimeOnly>()
+        //        .HaveConversion<TimeOnlyConverter>();
         //}
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

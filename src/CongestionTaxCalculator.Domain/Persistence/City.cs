@@ -16,10 +16,21 @@ namespace CongestionTaxCalculator.Domain.Persistence
         //    this.Id = Id;
         //}
 
+        //public City()
+        //{
+        //    this.Name  = "Gothenburg";
+        //}
+
+        //public City(string Name)
+        //{
+        //    this.Name = Name;
+        //}
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
 
         public virtual ICollection<CityVehicle>? CityVehicles { get; set; }
+
+        public virtual ICollection<Tariff>? Tariffs { get; set; }
 
     }
 }
