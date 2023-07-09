@@ -29,25 +29,24 @@ namespace CongestionTaxCalculator.DbMigrator.Data
             /* Configure your own tables/entities inside here */
 
 
-            builder.Entity<City>()
-                            .HasMany(v => v.Vehicles)
-                            .WithMany(c => c.Cities);
-
-
-            builder.Entity<Vehicle>()
-                            .Property(v => v.Id)
-                            .ValueGeneratedNever();
-
-            builder.Entity<Vehicle>()
-                            .Property(v => v.VehicleType)
-                            .HasMaxLength(50);
 
             builder.Entity<City>()
                             .Property(c => c.Name)
                             .HasMaxLength(500);
 
+            builder.Entity<City>()
+                .HasIndex(c => c.Name).IsUnique();
 
+            builder.Entity<Vehicle>()
+                            .Property(v => v.VehicleType)
+                            .HasMaxLength(50);
 
+            builder.Entity<Vehicle>()
+                            .HasIndex(v => v.VehicleType).IsUnique();
+
+            builder.Entity<City>()
+                            .HasMany(v => v.Vehicles)
+                            .WithMany(c => c.Cities);
 
         }
 

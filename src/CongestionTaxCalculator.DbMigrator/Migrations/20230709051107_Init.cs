@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -15,7 +14,8 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 name: "Cities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
@@ -27,7 +27,8 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 name: "Vehicles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     VehicleType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -39,7 +40,7 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 name: "CityVehicle",
                 columns: table => new
                 {
-                    CitiesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CitiesId = table.Column<int>(type: "int", nullable: false),
                     VehiclesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -60,9 +61,21 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cities_Name",
+                table: "Cities",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CityVehicle_VehiclesId",
                 table: "CityVehicle",
                 column: "VehiclesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_VehicleType",
+                table: "Vehicles",
+                column: "VehicleType",
+                unique: true);
         }
 
         /// <inheritdoc />
