@@ -100,55 +100,75 @@ namespace CongestionTaxCalculator.DbMigrator.Data
 
             #region Tariff Defination            
             congestionTaxContext.Entry(gothenburgCity).State = EntityState.Unchanged;
+            congestionTaxContext.Entry(londonCity).State = EntityState.Unchanged;
 
             //--------------------------------------- Tariff Defination: No:1 , Year = 2013----------------------------------------------------------------------------
-            Tariff tariff1 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(0, 0, 0), ToTime = new TimeSpan(5, 59, 59), Amount = 0.00m };
+            TariffCost tariff1 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(0, 0, 0), ToTime = new TimeSpan(5, 59, 59), Amount = 0.00m };
 
-            Tariff tariff2 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(6, 0, 0), ToTime = new TimeSpan(6, 29, 59), Amount = 8.00m };
-            Tariff tariff3 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(6, 30, 0), ToTime = new TimeSpan(6, 59, 59), Amount = 13.00m };
-            Tariff tariff4 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(7, 0, 0), ToTime = new TimeSpan(7, 59, 59), Amount = 18.00m };
-            Tariff tariff5 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(8, 0, 0), ToTime = new TimeSpan(8, 29, 59), Amount = 13.00m };
+            TariffCost tariff2 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(6, 0, 0), ToTime = new TimeSpan(6, 29, 59), Amount = 8.00m };
+            TariffCost tariff3 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(6, 30, 0), ToTime = new TimeSpan(6, 59, 59), Amount = 13.00m };
+            TariffCost tariff4 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(7, 0, 0), ToTime = new TimeSpan(7, 59, 59), Amount = 18.00m };
+            TariffCost tariff5 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(8, 0, 0), ToTime = new TimeSpan(8, 29, 59), Amount = 13.00m };
 
-            Tariff tariff6 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(8, 30, 0), ToTime = new TimeSpan(14, 59, 59), Amount = 8.00m };
-            Tariff tariff7 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(15, 0, 0), ToTime = new TimeSpan(15, 29, 59), Amount = 13.00m };
-            Tariff tariff8 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(15, 30, 0), ToTime = new TimeSpan(16, 59, 59), Amount = 18.00m };
-            Tariff tariff9 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(17, 0, 0), ToTime = new TimeSpan(17, 59, 59), Amount = 13.00m };
+            TariffCost tariff6 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(8, 30, 0), ToTime = new TimeSpan(14, 59, 59), Amount = 8.00m };
+            TariffCost tariff7 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(15, 0, 0), ToTime = new TimeSpan(15, 29, 59), Amount = 13.00m };
+            TariffCost tariff8 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(15, 30, 0), ToTime = new TimeSpan(16, 59, 59), Amount = 18.00m };
+            TariffCost tariff9 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(17, 0, 0), ToTime = new TimeSpan(17, 59, 59), Amount = 13.00m };
 
-            Tariff tariff10 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(18, 0, 0), ToTime = new TimeSpan(18, 29, 59), Amount = 8.00m };
-            Tariff tariff11 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(18, 30, 0), ToTime = new TimeSpan(23, 59, 59), Amount = 0.00m };
+            TariffCost tariff10 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(18, 0, 0), ToTime = new TimeSpan(18, 29, 59), Amount = 8.00m };
+            TariffCost tariff11 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(18, 30, 0), ToTime = new TimeSpan(23, 59, 59), Amount = 0.00m };
 
             //--------------------------------------- Tariff Defination: No:2 , Year = 2013----------------------------------------------------------------------------
-            Tariff tariffNO2_2013_1 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(0, 0, 0), ToTime = new TimeSpan(5, 59, 59), Amount = 0.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_1 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(0, 0, 0), ToTime = new TimeSpan(5, 59, 59), Amount = 0.00m, TariffNO=2 };
 
-            Tariff tariffNO2_2013_2 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(6, 0, 0), ToTime = new TimeSpan(6, 29, 59), Amount = 8.00m, TariffNO=2 };
-            Tariff tariffNO2_2013_3 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(6, 30, 0), ToTime = new TimeSpan(6, 59, 59), Amount = 13.00m, TariffNO=2 };
-            Tariff tariffNO2_2013_4 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(7, 0, 0), ToTime = new TimeSpan(7, 59, 59), Amount = 18.00m, TariffNO=2 };
-            Tariff tariffNO2_2013_5 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(8, 0, 0), ToTime = new TimeSpan(8, 29, 59), Amount = 13.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_2 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(6, 0, 0), ToTime = new TimeSpan(6, 29, 59), Amount = 8.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_3 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(6, 30, 0), ToTime = new TimeSpan(6, 59, 59), Amount = 13.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_4 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(7, 0, 0), ToTime = new TimeSpan(7, 59, 59), Amount = 18.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_5 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(8, 0, 0), ToTime = new TimeSpan(8, 29, 59), Amount = 13.00m, TariffNO=2 };
 
-            Tariff tariffNO2_2013_6 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(8, 30, 0), ToTime = new TimeSpan(14, 59, 59), Amount = 8.00m, TariffNO=2 };
-            Tariff tariffNO2_2013_7 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(15, 0, 0), ToTime = new TimeSpan(15, 29, 59), Amount = 13.00m, TariffNO=2 };
-            Tariff tariffNO2_2013_8 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(15, 30, 0), ToTime = new TimeSpan(16, 59, 59), Amount = 18.00m, TariffNO=2 };
-            Tariff tariffNO2_2013_9 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(17, 0, 0), ToTime = new TimeSpan(17, 59, 59), Amount = 13.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_6 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(8, 30, 0), ToTime = new TimeSpan(14, 59, 59), Amount = 8.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_7 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(15, 0, 0), ToTime = new TimeSpan(15, 29, 59), Amount = 13.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_8 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(15, 30, 0), ToTime = new TimeSpan(16, 59, 59), Amount = 18.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_9 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(17, 0, 0), ToTime = new TimeSpan(17, 59, 59), Amount = 13.00m, TariffNO=2 };
 
-            Tariff tariffNO2_2013_10 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(18, 0, 0), ToTime = new TimeSpan(18, 29, 59), Amount = 8.00m, TariffNO=2 };
-            Tariff tariffNO2_2013_11 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(18, 30, 0), ToTime = new TimeSpan(23, 59, 59), Amount = 0.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_10 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(18, 0, 0), ToTime = new TimeSpan(18, 29, 59), Amount = 8.00m, TariffNO=2 };
+            TariffCost tariffNO2_2013_11 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(18, 30, 0), ToTime = new TimeSpan(23, 59, 59), Amount = 0.00m, TariffNO=2 };
 
 
             //--------------------------------------- Tariff Defination: No:1 , Year = 2012----------------------------------------------------------------------------
-            Tariff tariffNO1_2012_1 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(0, 0, 0), ToTime = new TimeSpan(5, 59, 59), Amount = 0.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_1 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(0, 0, 0), ToTime = new TimeSpan(5, 59, 59), Amount = 0.00m, DefineTariffYear=2012 };
 
-            Tariff tariffNO1_2012_2 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(6, 0, 0), ToTime = new TimeSpan(6, 29, 59), Amount = 8.00m, DefineTariffYear=2012 };
-            Tariff tariffNO1_2012_3 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(6, 30, 0), ToTime = new TimeSpan(6, 59, 59), Amount = 13.00m, DefineTariffYear=2012 };
-            Tariff tariffNO1_2012_4 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(7, 0, 0), ToTime = new TimeSpan(7, 59, 59), Amount = 18.00m, DefineTariffYear=2012 };
-            Tariff tariffNO1_2012_5 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(8, 0, 0), ToTime = new TimeSpan(8, 29, 59), Amount = 13.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_2 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(6, 0, 0), ToTime = new TimeSpan(6, 29, 59), Amount = 8.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_3 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(6, 30, 0), ToTime = new TimeSpan(6, 59, 59), Amount = 13.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_4 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(7, 0, 0), ToTime = new TimeSpan(7, 59, 59), Amount = 18.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_5 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(8, 0, 0), ToTime = new TimeSpan(8, 29, 59), Amount = 13.00m, DefineTariffYear=2012 };
 
-            Tariff tariffNO1_2012_6 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(8, 30, 0), ToTime = new TimeSpan(14, 59, 59), Amount = 8.00m, DefineTariffYear=2012 };
-            Tariff tariffNO1_2012_7 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(15, 0, 0), ToTime = new TimeSpan(15, 29, 59), Amount = 13.00m, DefineTariffYear=2012 };
-            Tariff tariffNO1_2012_8 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(15, 30, 0), ToTime = new TimeSpan(16, 59, 59), Amount = 18.00m, DefineTariffYear=2012 };
-            Tariff tariffNO1_2012_9 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(17, 0, 0), ToTime = new TimeSpan(17, 59, 59), Amount = 13.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_6 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(8, 30, 0), ToTime = new TimeSpan(14, 59, 59), Amount = 8.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_7 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(15, 0, 0), ToTime = new TimeSpan(15, 29, 59), Amount = 13.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_8 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(15, 30, 0), ToTime = new TimeSpan(16, 59, 59), Amount = 18.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_9 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(17, 0, 0), ToTime = new TimeSpan(17, 59, 59), Amount = 13.00m, DefineTariffYear=2012 };
 
-            Tariff tariffNO1_2012_10 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(18, 0, 0), ToTime = new TimeSpan(18, 29, 59), Amount = 8.00m, DefineTariffYear=2012 };
-            Tariff tariffNO1_2012_11 = new Tariff { City = gothenburgCity, FromTime = new TimeSpan(18, 30, 0), ToTime = new TimeSpan(23, 59, 59), Amount = 0.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_10 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(18, 0, 0), ToTime = new TimeSpan(18, 29, 59), Amount = 8.00m, DefineTariffYear=2012 };
+            TariffCost tariffNO1_2012_11 = new TariffCost { City = gothenburgCity, FromTime = new TimeSpan(18, 30, 0), ToTime = new TimeSpan(23, 59, 59), Amount = 0.00m, DefineTariffYear=2012 };
+
+
+
+            //---------------------------------------London Tariff Defination: No:1 , Year = 2013----------------------------------------------------------------------------
+            TariffCost tarifflondon_NO1_2013_1 = new TariffCost { City = londonCity, FromTime = new TimeSpan(0, 0, 0), ToTime = new TimeSpan(5, 59, 59), Amount = 0.00m };
+
+            TariffCost tarifflondon_NO1_2013_2 = new TariffCost { City = londonCity, FromTime = new TimeSpan(6, 0, 0), ToTime = new TimeSpan(6, 29, 59), Amount = 8.00m };
+            TariffCost tarifflondon_NO1_2013_3 = new TariffCost { City = londonCity, FromTime = new TimeSpan(6, 30, 0), ToTime = new TimeSpan(6, 59, 59), Amount = 13.00m };
+            TariffCost tarifflondon_NO1_2013_4 = new TariffCost { City = londonCity, FromTime = new TimeSpan(7, 0, 0), ToTime = new TimeSpan(7, 59, 59), Amount = 18.00m };
+            TariffCost tarifflondon_NO1_2013_5 = new TariffCost { City = londonCity, FromTime = new TimeSpan(8, 0, 0), ToTime = new TimeSpan(8, 29, 59), Amount = 13.00m };
+
+            TariffCost tarifflondon_NO1_2013_6 = new TariffCost { City = londonCity, FromTime = new TimeSpan(8, 30, 0), ToTime = new TimeSpan(14, 59, 59), Amount = 8.00m };
+            TariffCost tarifflondon_NO1_2013_7 = new TariffCost { City = londonCity, FromTime = new TimeSpan(15, 0, 0), ToTime = new TimeSpan(15, 29, 59), Amount = 13.00m };
+            TariffCost tarifflondon_NO1_2013_8 = new TariffCost { City = londonCity, FromTime = new TimeSpan(15, 30, 0), ToTime = new TimeSpan(16, 59, 59), Amount = 18.00m };
+            TariffCost tarifflondon_NO1_2013_9 = new TariffCost { City = londonCity, FromTime = new TimeSpan(17, 0, 0), ToTime = new TimeSpan(17, 59, 59), Amount = 13.00m };
+
+            TariffCost tarifflondon_NO1_2013_10 = new TariffCost { City = londonCity, FromTime = new TimeSpan(18, 0, 0), ToTime = new TimeSpan(18, 29, 59), Amount = 8.00m };
+            TariffCost tarifflondon_NO1_2013_11 = new TariffCost { City = londonCity, FromTime = new TimeSpan(18, 30, 0), ToTime = new TimeSpan(23, 59, 59), Amount = 0.00m };
+
             #endregion
 
             if (!(await congestionTaxContext.Tariffs.AnyAsync()))
@@ -156,6 +176,7 @@ namespace CongestionTaxCalculator.DbMigrator.Data
 
 
                 #region Tariff Add Db
+                //---------------------------------------Gothenburg City----------------------------------------------------------------------------
                 await congestionTaxContext.Tariffs.AddAsync(tariff1);  await congestionTaxContext.Tariffs.AddAsync(tariff2);  await congestionTaxContext.Tariffs.AddAsync(tariff3);
                 await congestionTaxContext.Tariffs.AddAsync(tariff4);  await congestionTaxContext.Tariffs.AddAsync(tariff5);  await congestionTaxContext.Tariffs.AddAsync(tariff6);
                 await congestionTaxContext.Tariffs.AddAsync(tariff7);  await congestionTaxContext.Tariffs.AddAsync(tariff8);  await congestionTaxContext.Tariffs.AddAsync(tariff9);
@@ -170,6 +191,14 @@ namespace CongestionTaxCalculator.DbMigrator.Data
                 await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_4); await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_5); await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_6);
                 await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_7); await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_8); await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_9);
                 await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_10); await congestionTaxContext.Tariffs.AddAsync(tariffNO1_2012_11);
+
+
+                //---------------------------------------London City----------------------------------------------------------------------------
+                await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_1); await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_2); await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_3);
+                await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_4); await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_5); await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_6);
+                await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_7); await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_8); await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_9);
+                await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_10); await congestionTaxContext.Tariffs.AddAsync(tarifflondon_NO1_2013_11);
+
                 #endregion
                 await congestionTaxContext.SaveChangesAsync();
                 logger.LogInformation($"Seed Tariffs- Database associated with context {typeof(CongestionTaxContextSeed).Name}");

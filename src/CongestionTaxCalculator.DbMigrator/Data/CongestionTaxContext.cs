@@ -20,7 +20,9 @@ namespace CongestionTaxCalculator.DbMigrator.Data
         public DbSet<City> Cities => Set<City>();
         public DbSet<Vehicle> Vehicles => Set<Vehicle>();
         public DbSet<CityVehicle> CityVehicles => Set<CityVehicle>();
-        public DbSet<Tariff> Tariffs => Set<Tariff>();
+
+        public DbSet<TariffDefinition> TariffDefinitions => Set<TariffDefinition>();
+        public DbSet<TariffCost> TariffCosts => Set<TariffCost>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -28,7 +30,8 @@ namespace CongestionTaxCalculator.DbMigrator.Data
             builder.ApplyConfiguration(new CityConfiguration());
             builder.ApplyConfiguration(new VehicleConfiguration());
             builder.ApplyConfiguration(new CityVehicleConfiguration());
-            builder.ApplyConfiguration(new TariffConfiguration());
+            builder.ApplyConfiguration(new TariffDefineConfiguration());
+            builder.ApplyConfiguration(new TariffCostConfiguration());
 
 
             /* Configure your own tables/entities inside here */

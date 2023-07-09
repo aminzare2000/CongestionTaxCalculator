@@ -19,9 +19,9 @@ namespace CongestionTaxCalculator.Domain.Persistence.Configuration
             builder.HasMany(x => x.CityVehicles).WithOne(x => x.City).HasForeignKey(x => x.CityId);
 
 
-            builder.HasMany(t => t.Tariffs)
-                    .WithOne(c => c.City)
-                    .HasForeignKey(c => c.CityId);
+            builder.HasOne(t => t.TariffDefinition)
+                            .WithMany(t=>t.Cities)
+                            .HasForeignKey(t=>t.TariffDefinitionId);
                     
 
         }

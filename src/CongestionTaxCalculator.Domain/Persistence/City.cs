@@ -30,7 +30,7 @@ namespace CongestionTaxCalculator.Domain.Persistence
 
         public virtual ICollection<CityVehicle>? CityVehicles { get; set; }
 
-        public virtual ICollection<Tariff>? Tariffs { get; set; }
-
+        public TariffDefinition TariffDefinition { get; set; } = new TariffDefinition();
+        public int TariffDefinitionId { get; set; }
     }
 }
