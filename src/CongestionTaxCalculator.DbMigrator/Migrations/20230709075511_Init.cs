@@ -37,24 +37,25 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CityVehicle",
+                name: "CityVehicles",
                 columns: table => new
                 {
-                    CitiesId = table.Column<int>(type: "int", nullable: false),
-                    VehiclesId = table.Column<int>(type: "int", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    IsExempt = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CityVehicle", x => new { x.CitiesId, x.VehiclesId });
+                    table.PrimaryKey("PK_CityVehicles", x => new { x.CityId, x.VehicleId });
                     table.ForeignKey(
-                        name: "FK_CityVehicle_Cities_CitiesId",
-                        column: x => x.CitiesId,
+                        name: "FK_CityVehicles_Cities_CityId",
+                        column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CityVehicle_Vehicles_VehiclesId",
-                        column: x => x.VehiclesId,
+                        name: "FK_CityVehicles_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -67,9 +68,9 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CityVehicle_VehiclesId",
-                table: "CityVehicle",
-                column: "VehiclesId");
+                name: "IX_CityVehicles_VehicleId",
+                table: "CityVehicles",
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_VehicleType",
@@ -82,7 +83,7 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CityVehicle");
+                name: "CityVehicles");
 
             migrationBuilder.DropTable(
                 name: "Cities");

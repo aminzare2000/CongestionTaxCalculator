@@ -20,10 +20,9 @@ namespace CongestionTaxCalculator.DbMigrator.Data
             //- Minibus
             //- Car
             //- Truck
-            List<Vehicle>? vehicles = null;
             if (!(await congestionTaxContext.Vehicles.AnyAsync()))
             {
-                vehicles = new List<Vehicle>() {
+                List<Vehicle> vehicles = new List<Vehicle>() {
                         new Vehicle {  VehicleType="Emergency" },
                         new Vehicle {  VehicleType="Bus" },
                         new Vehicle {  VehicleType="Diplomat" },
@@ -39,45 +38,68 @@ namespace CongestionTaxCalculator.DbMigrator.Data
                 logger.LogInformation($"Seed Vehicles- Database associated with context {typeof(CongestionTaxContextSeed).Name}");
             }
 
-
             if (!(await congestionTaxContext.Cities.AnyAsync()))
             {
-
-                vehicles = congestionTaxContext.Vehicles.ToList();
                 List<City> cities = new List<City>()
                 {
-                    new City {
-                        Name = "Gothenburg" ,
-                        Vehicles = new List<Vehicle>() {
-                                                                    vehicles.Where(x=>x.VehicleType=="Emergency").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Bus").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Diplomat").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Motorcycles").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Foreign").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Car").Single(),
-                        }
-                    }, // Gothenburg City
-                    new City {
-                        Name = "London" ,
-                        Vehicles = new List<Vehicle>() {
-                                                                    vehicles.Where(x=>x.VehicleType=="Emergency").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Bus").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Diplomat").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Motorcycles").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Foreign").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Car").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Van").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Minibus").Single(),
-                                                                    vehicles.Where(x=>x.VehicleType=="Truck").Single(),
-
-                        }
-                    }, // London City
-
+                    new City { Name = "Gothenburg" },
+                    new City { Name = "London" }
                 };
                 await congestionTaxContext.Cities.AddRangeAsync(cities);
                 await congestionTaxContext.SaveChangesAsync();
 
                 logger.LogInformation($"Seed Cities- Database associated with context {typeof(CongestionTaxContextSeed).Name}");
+            }
+
+            if (!(await congestionTaxContext.CityVehicles.AnyAsync()))
+            {
+
+                                                                    var temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "Gothenburg").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Emergency").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "Gothenburg").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Bus").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "Gothenburg").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Diplomat").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "Gothenburg").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Motorcycles").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "Gothenburg").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Foreign").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "Gothenburg").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Car").Single(), IsExempt = false };
+
+                    
+                    
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Emergency").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Bus").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Diplomat").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Motorcycles").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Foreign").Single(), IsExempt = true };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Car").Single(), IsExempt = false };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Van").Single(), IsExempt = false };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Minibus").Single(), IsExempt = false };
+                                                                    temp = new CityVehicle { City = congestionTaxContext.Cities.Where(x => x.Name == "London").Single(), Vehicle = congestionTaxContext.Vehicles.Where(x => x.VehicleType == "Truck").Single(), IsExempt = false };
+
+
+                var cityVehicles = new List<CityVehicle>()
+                {
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="Gothenburg").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Emergency").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="Gothenburg").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Bus").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="Gothenburg").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Diplomat").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="Gothenburg").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Motorcycles").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="Gothenburg").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Foreign").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="Gothenburg").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Car").Single(), IsExempt = false } 
+
+                    , // Gothenburg City
+                    
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Emergency").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Bus").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Diplomat").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Motorcycles").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Foreign").Single(), IsExempt = true } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Car").Single(), IsExempt = false } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Van").Single(), IsExempt = false } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Minibus").Single(), IsExempt = false } ,
+                                                                    new CityVehicle { City = congestionTaxContext.Cities.Where(x=>x.Name=="London").Single() , Vehicle = congestionTaxContext.Vehicles.Where(x=>x.VehicleType=="Truck").Single(), IsExempt = false } ,
+                     // London City
+                };
+                await congestionTaxContext.CityVehicles.AddRangeAsync(cityVehicles);
+                await congestionTaxContext.SaveChangesAsync();
+
+                logger.LogInformation($"Seed CityVehicle- Database associated with context {typeof(CongestionTaxContextSeed).Name}");
             }
         }
     }

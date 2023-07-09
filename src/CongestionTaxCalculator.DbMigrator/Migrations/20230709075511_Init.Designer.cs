@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CongestionTaxCalculator.DbMigrator.Migrations
 {
     [DbContext(typeof(CongestionTaxContext))]
-    [Migration("20230709051107_Init")]
+    [Migration("20230709075511_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -23,21 +23,6 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CityVehicle", b =>
-                {
-                    b.Property<int>("CitiesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehiclesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CitiesId", "VehiclesId");
-
-                    b.HasIndex("VehiclesId");
-
-                    b.ToTable("CityVehicle");
-                });
 
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.City", b =>
                 {
@@ -58,6 +43,24 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                         .IsUnique();
 
                     b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.CityVehicle", b =>
+                {
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsExempt")
+                        .HasColumnType("bit");
+
+                    b.HasKey("CityId", "VehicleId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("CityVehicles");
                 });
 
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.Vehicle", b =>
@@ -81,19 +84,33 @@ namespace CongestionTaxCalculator.DbMigrator.Migrations
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("CityVehicle", b =>
+            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.CityVehicle", b =>
                 {
-                    b.HasOne("CongestionTaxCalculator.Domain.Persistence.City", null)
-                        .WithMany()
-                        .HasForeignKey("CitiesId")
+                    b.HasOne("CongestionTaxCalculator.Domain.Persistence.City", "City")
+                        .WithMany("CityVehicles")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CongestionTaxCalculator.Domain.Persistence.Vehicle", null)
-                        .WithMany()
-                        .HasForeignKey("VehiclesId")
+                    b.HasOne("CongestionTaxCalculator.Domain.Persistence.Vehicle", "Vehicle")
+                        .WithMany("CityVehicles")
+                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.City", b =>
+                {
+                    b.Navigation("CityVehicles");
+                });
+
+            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.Vehicle", b =>
+                {
+                    b.Navigation("CityVehicles");
                 });
 #pragma warning restore 612, 618
         }

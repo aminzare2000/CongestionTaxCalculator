@@ -7,8 +7,8 @@ namespace CongestionTaxCalculator.Domain.Persistence
     {
 
         public int Id { get; set; }
-        public string VehicleType { get; set; } = string.Empty;
+        public string VehicleType { get; set; } = String.Empty;
 
-        public virtual ICollection<City> Cities { get; set; } = new HashSet<City>();
+        public virtual ICollection<CityVehicle>? CityVehicles { get; set; }
     }
 }

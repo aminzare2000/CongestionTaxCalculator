@@ -18,6 +18,7 @@ namespace CongestionTaxCalculator.DbMigrator.Data
         public DbSet<City> Cities => Set<City>();
         public DbSet<Vehicle> Vehicles => Set<Vehicle>();
 
+        public DbSet<CityVehicle> CityVehicles => Set<CityVehicle>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -44,10 +45,9 @@ namespace CongestionTaxCalculator.DbMigrator.Data
             builder.Entity<Vehicle>()
                             .HasIndex(v => v.VehicleType).IsUnique();
 
-            builder.Entity<City>()
-                            .HasMany(v => v.Vehicles)
-                            .WithMany(c => c.Cities);
-
+            builder.Entity<City>().HasMany(x => x.CityVehicles).WithOne(x => x.City).HasForeignKey(x => x.CityId);
+            builder.Entity<Vehicle>().HasMany(x => x.CityVehicles).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId);
+            builder.Entity<CityVehicle>().HasKey(x => new { x.CityId, x.VehicleId });
         }
 
 
