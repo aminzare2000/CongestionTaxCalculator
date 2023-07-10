@@ -24,15 +24,27 @@ namespace CongestionTaxCalculator.DbMigrator.Data
         public DbSet<TariffDefinition> TariffDefinitions => Set<TariffDefinition>();
         public DbSet<TariffCost> TariffCosts => Set<TariffCost>();
 
+        public DbSet<TariffSetting> TariffSettings => Set<TariffSetting>();
+
+        public DbSet<PublicHoliday> PublicHolidays => Set<PublicHoliday>();
+
+        public DbSet<WorkingDay> WorkingDays => Set<WorkingDay>();
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new CityConfiguration());
             builder.ApplyConfiguration(new VehicleConfiguration());
             builder.ApplyConfiguration(new CityVehicleConfiguration());
+
+            builder.ApplyConfiguration(new TariffDefineConfiguration());
             builder.ApplyConfiguration(new TariffDefineConfiguration());
             builder.ApplyConfiguration(new TariffCostConfiguration());
+            builder.ApplyConfiguration(new TariffSettingConfiguration());
 
+
+            builder.ApplyConfiguration(new PublicHolidayConfiguration());
+            builder.ApplyConfiguration(new WorkingDayConfiguration());
 
             /* Configure your own tables/entities inside here */
 

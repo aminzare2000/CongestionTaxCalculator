@@ -1,4 +1,4 @@
-﻿namespace CongestionTaxCalculator.Domain
+﻿namespace CongestionTaxCalculator.Domain.Common
 {
     public enum DAYS
     {

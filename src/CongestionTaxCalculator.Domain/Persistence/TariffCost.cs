@@ -13,9 +13,6 @@ namespace CongestionTaxCalculator.Domain.Persistence
         public TimeSpan ToTime { get; set; }
         public Decimal Amount { get; set; }
 
-        public City City { get; set; } = null!;
-        public int CityId { get; set; }
-
         public TariffDefinition TariffDefinition { get; set; } = null!;
         public int TariffDefinitionId { get; set; }
     }

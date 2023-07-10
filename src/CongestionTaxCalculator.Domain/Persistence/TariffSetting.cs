@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CongestionTaxCalculator.Domain.Common;
 
 namespace CongestionTaxCalculator.Domain.Persistence
 {
@@ -8,7 +9,7 @@ namespace CongestionTaxCalculator.Domain.Persistence
 
         public int Id { get; set; }
 
-        public int NoTaxFreeDaysBeforeHoliday { get; set; } = 1;
+        public int NumberTaxFreeDaysBeforeHoliday { get; set; } = 1;
 
         public Decimal MaxTaxAmount { get; set; } = 60.00m;
 
@@ -16,6 +17,11 @@ namespace CongestionTaxCalculator.Domain.Persistence
 
         public TariffDefinition TariffDefinition { get; set; } = null!;
         public int TariffDefinitionId { get; set; }
+
+        public virtual ICollection<PublicHoliday>? PublicHolidays { get; set; }
+
+        public virtual ICollection<WorkingDay>? WorkingDays { get; set; }
+
 
     }
 }

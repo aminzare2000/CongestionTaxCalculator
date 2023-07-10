@@ -10,14 +10,15 @@ namespace CongestionTaxCalculator.Domain.Persistence
 
         //Tariff Number
         public int TariffNO { get; set; } = 1;
-        public int TariffYear { get; set; } = 2013;
+        public int StartTariffYear { get; set; } = 2013;
 
         public bool IsActive { get; set; } = false;
 
-        public virtual ICollection<City>? Cities { get; set; }
+        public City City { get; set; } = new City();
+        public int CityId { get; set; }
 
         public virtual ICollection<TariffCost>? TariffCosts { get; set; }
 
-        public TariffSetting TariffSetting { get; set; } = new TariffSetting();
+        public TariffSetting? TariffSetting { get; set; }
     }
 }
