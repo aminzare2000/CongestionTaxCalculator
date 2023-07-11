@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "CongestionTaxCalculator.DbMigrator": {
+    "CongestionTaxCalculator.EFCore": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

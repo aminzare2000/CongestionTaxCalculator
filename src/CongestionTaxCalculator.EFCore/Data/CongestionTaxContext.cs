@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using CongestionTaxCalculator.Infrastructure;
 
-namespace CongestionTaxCalculator.DbMigrator.Data
+namespace CongestionTaxCalculator.EFCore.Data
 {
     public class CongestionTaxContext : DbContext
     {

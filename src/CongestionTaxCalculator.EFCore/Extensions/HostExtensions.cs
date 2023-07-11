@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using System;
 
-namespace CongestionTaxCalculator.DbMigrator.Extensions
+namespace CongestionTaxCalculator.EFCore.Extensions
 {
     public static class HostExtensions
     {

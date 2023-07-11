@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using CongestionTaxCalculator.DbMigrator.Extensions;
-using CongestionTaxCalculator.DbMigrator.Data;
+using CongestionTaxCalculator.EFCore.Extensions;
+using CongestionTaxCalculator.EFCore.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CongestionTaxCalculator.DbMigrator
+namespace CongestionTaxCalculator.EFCore
 {
     public class Program
     {

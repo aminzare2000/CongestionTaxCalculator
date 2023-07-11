@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CongestionTaxCalculator.DbMigrator.Migrations
+namespace CongestionTaxCalculator.EFCore.Migrations
 {
     /// <inheritdoc />
     public partial class init : Migration

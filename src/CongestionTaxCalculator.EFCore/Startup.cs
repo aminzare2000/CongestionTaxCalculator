@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using CongestionTaxCalculator.DbMigrator.Data;
+using CongestionTaxCalculator.EFCore.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CongestionTaxCalculator.DbMigrator
+namespace CongestionTaxCalculator.EFCore
 {
     public class Startup
     {

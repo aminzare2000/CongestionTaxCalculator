@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.Domain", "src\CongestionTaxCalculator.Domain\CongestionTaxCalculator.Domain.csproj", "{05503D6C-2963-4DA1-BE10-26B7BED71347}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.DbMigrator", "src\CongestionTaxCalculator.DbMigrator\CongestionTaxCalculator.DbMigrator.csproj", "{500CABA2-2D72-416C-94B5-438D4C4C7985}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.Infrastructure", "src\CongestionTaxCalculator.Infrastructure\CongestionTaxCalculator.Infrastructure.csproj", "{B0C0FB86-C911-4E1C-AA9B-42DC77F59A6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.EFCore", "src\CongestionTaxCalculator.EFCore\CongestionTaxCalculator.EFCore.csproj", "{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{05503D6C-2963-4DA1-BE10-26B7BED71347}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05503D6C-2963-4DA1-BE10-26B7BED71347}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05503D6C-2963-4DA1-BE10-26B7BED71347}.Release|Any CPU.Build.0 = Release|Any CPU
-		{500CABA2-2D72-416C-94B5-438D4C4C7985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{500CABA2-2D72-416C-94B5-438D4C4C7985}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{500CABA2-2D72-416C-94B5-438D4C4C7985}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{500CABA2-2D72-416C-94B5-438D4C4C7985}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0C0FB86-C911-4E1C-AA9B-42DC77F59A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B0C0FB86-C911-4E1C-AA9B-42DC77F59A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C0FB86-C911-4E1C-AA9B-42DC77F59A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C0FB86-C911-4E1C-AA9B-42DC77F59A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

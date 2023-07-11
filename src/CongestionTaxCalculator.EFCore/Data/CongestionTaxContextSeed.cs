@@ -1,14 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using CongestionTaxCalculator.Domain.Persistence;
 using CongestionTaxCalculator.Domain.Common;
+using CongestionTaxCalculator.EFCore.Repository;
 
 
-namespace CongestionTaxCalculator.DbMigrator.Data
+namespace CongestionTaxCalculator.EFCore.Data
 {
     public class CongestionTaxContextSeed
     {
         public static async Task SeedAsync(CongestionTaxContext congestionTaxContext, ILogger<CongestionTaxContextSeed> logger)
         {
+
+            Repository<City> repoCity = new Repository<City>(congestionTaxContext);
+
             //### Tax Exempt vehicles
             //- Emergency vehicles
             //- Busses
@@ -71,8 +75,14 @@ namespace CongestionTaxCalculator.DbMigrator.Data
                 gothenburgCity = new City { Name = "Gothenburg" };
                 londonCity = new City { Name = "London" };
 
-                await congestionTaxContext.Cities.AddAsync(gothenburgCity); await congestionTaxContext.Cities.AddAsync(londonCity);
-                await congestionTaxContext.SaveChangesAsync();
+                await repoCity.Add(gothenburgCity);
+                await repoCity.Add(londonCity);
+
+                //await congestionTaxContext.Cities.AddAsync(gothenburgCity); await congestionTaxContext.Cities.AddAsync(londonCity);
+                //await congestionTaxContext.SaveChangesAsync();
+
+                //await congestionTaxContext.Cities.AddAsync(gothenburgCity); await congestionTaxContext.Cities.AddAsync(londonCity);
+                //await congestionTaxContext.SaveChangesAsync();
 
                 logger.LogInformation($"Seed Cities- Database associated with context {typeof(CongestionTaxContextSeed).Name}");
             }
