@@ -8,6 +8,14 @@ namespace CongestionTaxCalculator.Domain.Model
         public TimeSpan ToTime { get; init; }
         public Decimal Amount { get; init; }
 
+        private TariffCost() { }
+
+        public TariffCost(TimeSpan fromTime, TimeSpan toTime , Decimal amount)
+        {
+            this.FromTime = fromTime;
+            this.ToTime = toTime;
+            this.Amount = amount;
+        }
 
         protected override bool EqualsCore(TariffCost other)
         {

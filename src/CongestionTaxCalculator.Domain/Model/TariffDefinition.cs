@@ -11,9 +11,31 @@ namespace CongestionTaxCalculator.Domain.Model
 
         public bool IsActive { get; init; }
 
+        public TariffSetting TariffSetting { get; init; }
+
         private TariffCost[] _tariffCosts;
 
-        //public TariffSetting? TariffSetting { get; set; }
+        private TariffDefinition() { }
+
+        public TariffDefinition(int tariffNO, int startTariffYear, bool isActive, TariffCost[] tariffCosts , TariffSetting tariffSetting)
+        {
+            this.TariffNO = tariffNO;
+            this.StartTariffYear = startTariffYear;
+            this.IsActive = isActive;
+
+            this.TariffSetting = new TariffSetting(tariffSetting);
+
+            this._tariffCosts = new TariffCost[tariffCosts.Length];
+            for (int i = 0; i < tariffCosts.Length; i++)
+            {
+                this._tariffCosts[i] = new TariffCost(tariffCosts[i].FromTime, tariffCosts[i].ToTime, tariffCosts[i].Amount);
+            }
+
+        }
+
+        public TariffDefinition(TariffDefinition tariffDefinition) : this(tariffDefinition.TariffNO, 
+            tariffDefinition.StartTariffYear, tariffDefinition.IsActive, tariffDefinition.GetTariffCosts().ToArray(), tariffDefinition.TariffSetting)  { }
+
 
         public IEnumerable<TariffCost> GetTariffCosts()
         {

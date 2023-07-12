@@ -10,8 +10,11 @@ namespace CongestionTaxCalculator.Domain.Model
         {
             this.VehicleType = VehicleType;
         }
+        public Vehicle(Vehicle vehicle ) : this(vehicle.VehicleType) { }
 
-        protected override bool EqualsCore(Vehicle other)
+       
+
+    protected override bool EqualsCore(Vehicle other)
         {
             return VehicleType == other.VehicleType;
         }

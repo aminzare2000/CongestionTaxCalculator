@@ -15,26 +15,17 @@ namespace CongestionTaxCalculator.Domain.Model
             _vehicles = new Vehicle[vehicles.Length];
             for (int i = 0; i < vehicles.Length; i++)
             {
-                this._vehicles[i] = new Vehicle(vehicles[i].VehicleType);
+                this._vehicles[i] = new Vehicle(vehicles[i]);
             }
         }
-
-        public City(City City)
-        {
-            this.Name = City.Name;
-        }
-
+        public City(City city) : this(city.Name, city._vehicles) { }
+        
         public IEnumerable<Vehicle> GetVehicles()
         {
             foreach (var item in _vehicles)
             {
                 yield return item;
             }
-        }
-
-        public static implicit operator City(string name)
-        {
-            return new City(name);
         }
 
         protected override bool EqualsCore(City other)

@@ -39,6 +39,13 @@ namespace CongestionTaxCalculator.Domain.Model
 
         }
 
+        public TariffSetting(TariffSetting copyTariffSetting ) : this(copyTariffSetting.NumberTaxFreeDaysBeforeHoliday,
+                copyTariffSetting.MaxTaxAmount,
+                copyTariffSetting.TaxFreeMonthCalender,
+                copyTariffSetting._publicHolidays,
+                copyTariffSetting._weekendDays)
+        { }
+
         public IEnumerable<PublicHoliday> GetPublicHolidays()
         {
             foreach (var item in _publicHolidays)
@@ -47,7 +54,7 @@ namespace CongestionTaxCalculator.Domain.Model
             }
         }
 
-        public IEnumerable<DAYS> GetTariffCosts()
+        public IEnumerable<DAYS> GetDays()
         {
             foreach (var item in _weekendDays)
             {
