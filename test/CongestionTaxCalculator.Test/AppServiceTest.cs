@@ -148,6 +148,7 @@ namespace CongestionTaxCalculator.Test
                             NumberTaxFreeDaysBeforeHoliday = 1,
                             MaxTaxAmount = 60.00m,
                             TaxFreeMonthCalender = MONTH.July,
+                            SingleCharegeInterval = 60,
                             PublicHolidays = new List<Persistence.PublicHoliday>()
                                                         {
                                                             new Persistence.PublicHoliday { DateHoliday = new DateTime(2013,1,2) },
@@ -156,13 +157,13 @@ namespace CongestionTaxCalculator.Test
                                                             new Persistence.PublicHoliday { DateHoliday = new DateTime(2013, 5, 10) },
                                                         },
                             WorkingDays = new List<Persistence.WorkingDay>() {
-                                                            new Persistence.WorkingDay { day = DAYS.Saturday, IsWeekend = true},
-                                                            new Persistence.WorkingDay { day = DAYS.Sunday, IsWeekend = true},
-                                                            new Persistence.WorkingDay { day = DAYS.Monday, IsWeekend = false},
-                                                            new Persistence.WorkingDay { day = DAYS.Tuesday, IsWeekend = false},
-                                                            new Persistence.WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
-                                                            new Persistence.WorkingDay { day = DAYS.Thursday, IsWeekend = false},
-                                                            new Persistence.WorkingDay { day = DAYS.Friday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Saturday, IsWeekend = true},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Sunday, IsWeekend = true},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Monday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Tuesday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Wednesday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Thursday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Friday, IsWeekend = false},
 
                                                         }
                         },
@@ -201,15 +202,16 @@ namespace CongestionTaxCalculator.Test
                                                             numberTaxFreeDaysBeforeHoliday : 1,
                                                             maxTaxAmount : 60.00m,
                                                             taxFreeMonthCalender : MONTH.July,
+                                                            singleCharegeInterval:60,
                                                             publicHolidays: new Model.PublicHoliday[] {
                                                                 new Model.PublicHoliday( dateHoliday : new DateTime(2013,1,2) ),
                                                                 new Model.PublicHoliday( dateHoliday : new DateTime(2013, 4, 7) ),
                                                                 new Model.PublicHoliday( dateHoliday : new DateTime(2013, 4, 10) ),
                                                                 new Model.PublicHoliday( dateHoliday : new DateTime(2013, 5, 10) ),
                                                             },
-                                                            weekendDays: new DAYS[] {
-                                                                DAYS.Saturday,
-                                                                DAYS.Sunday
+                                                            weekendDays: new DayOfWeek[] {
+                                                                DayOfWeek.Saturday,
+                                                                DayOfWeek.Sunday
                                                             }
                                                         )
                                                 )
@@ -249,19 +251,20 @@ namespace CongestionTaxCalculator.Test
                             NumberTaxFreeDaysBeforeHoliday = 0,
                             MaxTaxAmount = 60.00m,
                             TaxFreeMonthCalender = MONTH.May,
+                            SingleCharegeInterval = 60,
                             PublicHolidays = new List<Persistence.PublicHoliday>()
                                                         {
                                                             new Persistence.PublicHoliday { DateHoliday = new DateTime(2013,1,2) },
                                                             new Persistence.PublicHoliday { DateHoliday = new DateTime(2013, 4, 7) },
                                                         },
                             WorkingDays = new List<Persistence.WorkingDay>() {
-                                                            new Persistence.WorkingDay { day = DAYS.Saturday, IsWeekend = false},
-                                                            new Persistence.WorkingDay { day = DAYS.Sunday, IsWeekend = false},
-                                                            new Persistence.WorkingDay { day = DAYS.Monday, IsWeekend = false},
-                                                             new Persistence.WorkingDay { day = DAYS.Tuesday, IsWeekend = false},                                                            
-                                                            new Persistence.WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
-                                                            new Persistence.WorkingDay { day = DAYS.Thursday, IsWeekend = true},
-                                                            new Persistence.WorkingDay { day = DAYS.Friday, IsWeekend = true},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Saturday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Sunday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Monday, IsWeekend = false},
+                                                             new Persistence.WorkingDay { day = DayOfWeek.Tuesday, IsWeekend = false},                                                            
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Wednesday, IsWeekend = false},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Thursday, IsWeekend = true},
+                                                            new Persistence.WorkingDay { day = DayOfWeek.Friday, IsWeekend = true},
 
                                                         }
                         },
@@ -296,13 +299,14 @@ namespace CongestionTaxCalculator.Test
                                                             numberTaxFreeDaysBeforeHoliday : 0,
                                                             maxTaxAmount : 60.00m,
                                                             taxFreeMonthCalender : MONTH.May,
+                                                            singleCharegeInterval : 60,
                                                             publicHolidays: new Model.PublicHoliday[] {
                                                                 new Model.PublicHoliday( dateHoliday : new DateTime(2013,1,2) ),
                                                                 new Model.PublicHoliday( dateHoliday : new DateTime(2013, 4, 7) ),
                                                             },
-                                                            weekendDays: new DAYS[] {
-                                                                DAYS.Thursday,
-                                                                DAYS.Friday
+                                                            weekendDays: new DayOfWeek[] {
+                                                                DayOfWeek.Thursday,
+                                                                DayOfWeek.Friday
                                                             }
                                                         )
                                                 )
@@ -448,10 +452,10 @@ namespace CongestionTaxCalculator.Test
             #region TariffSetting
 
             //--------------------------------------- Tariff Setting: No:1 , Year = 2013 , IsACtive , Gothenburg----------------------------------------------------------------------------
-            var tariffSettingGothenburg_NO1_2013 = new Persistence.TariffSetting { NumberTaxFreeDaysBeforeHoliday = 1, MaxTaxAmount = 60.00m, TaxFreeMonthCalender = MONTH.July, TariffDefinition = tariffDefinitionGothenburg_NO1_2013 };
+            var tariffSettingGothenburg_NO1_2013 = new Persistence.TariffSetting { NumberTaxFreeDaysBeforeHoliday = 1, MaxTaxAmount = 60.00m, TaxFreeMonthCalender = MONTH.July, SingleCharegeInterval = 60, TariffDefinition = tariffDefinitionGothenburg_NO1_2013 };
 
             //--------------------------------------- Tariff Setting: No:1 , Year = 2013 , IsACtive , London----------------------------------------------------------------------------
-            var tariffSettingLondon_NO1_2013 = new Persistence.TariffSetting { NumberTaxFreeDaysBeforeHoliday = 2, MaxTaxAmount = 60.00m, TaxFreeMonthCalender = MONTH.May, TariffDefinition = tariffDefinitionLondon_NO1_2013 };
+            var tariffSettingLondon_NO1_2013 = new Persistence.TariffSetting { NumberTaxFreeDaysBeforeHoliday = 2, MaxTaxAmount = 60.00m, TaxFreeMonthCalender = MONTH.May, SingleCharegeInterval = 60, TariffDefinition = tariffDefinitionLondon_NO1_2013 };
 
 
             //---------------------------------------Gothenburg City----------------------------------------------------------------------------
@@ -485,14 +489,14 @@ namespace CongestionTaxCalculator.Test
 
 
             //--------------------------------------- WorkingDay of Settings----------------------------------------------------------------------------
-            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DAYS.Saturday, IsWeekend = true, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
-            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DAYS.Sunday, IsWeekend = true, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
+            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DayOfWeek.Saturday, IsWeekend = true, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
+            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DayOfWeek.Sunday, IsWeekend = true, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
 
-            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DAYS.Monday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
-            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DAYS.Thursday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
-            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DAYS.Wednesday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
-            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DAYS.Tuesday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
-            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DAYS.Friday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
+            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DayOfWeek.Monday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
+            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DayOfWeek.Thursday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
+            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DayOfWeek.Wednesday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
+            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DayOfWeek.Tuesday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
+            _context.WorkingDays.Add(new Persistence.WorkingDay { day = DayOfWeek.Friday, IsWeekend = false, TariffSettings = new List<Persistence.TariffSetting>() { tariffSettingGothenburg_NO1_2013, tariffSettingLondon_NO1_2013 } });
             #endregion
 
             #endregion
