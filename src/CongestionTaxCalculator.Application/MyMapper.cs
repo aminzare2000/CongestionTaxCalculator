@@ -31,13 +31,13 @@ namespace CongestionTaxCalculator.Application
             else
                 throw new ApplicationException("NotFoundPublicHolidaysException");
 
-            DAYS[]? weekends = null;
+            DayOfWeek[]? weekends = null;
             if (tariffSetting.WorkingDays is not null)
             {
                 List<Persistence.WorkingDay> pWeekends = tariffSetting.WorkingDays.Where(w => w.IsWeekend).ToList();
                 if (pWeekends.Count() > 0)
                 {
-                    weekends = new DAYS[pWeekends.Count()];
+                    weekends = new DayOfWeek[pWeekends.Count()];
                     for (int i = 0; i < weekends.Length; i++)
                     {
                         weekends[i] = pWeekends[i].day;
@@ -51,6 +51,7 @@ namespace CongestionTaxCalculator.Application
             return new Model.TariffSetting(tariffSetting.NumberTaxFreeDaysBeforeHoliday,
                 tariffSetting.MaxTaxAmount,
                 tariffSetting.TaxFreeMonthCalender,
+                tariffSetting.SingleCharegeInterval,
                 publicHolidays,
                 weekends);
         }

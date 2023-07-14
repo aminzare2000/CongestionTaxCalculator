@@ -8,7 +8,7 @@ namespace CongestionTaxCalculator.Domain.Persistence
     {
 
         public int Id { get; set; }
-        public DAYS day { get; set; }
+        public DayOfWeek day { get; set; }
 
         public bool IsWeekend { get; set; }
 

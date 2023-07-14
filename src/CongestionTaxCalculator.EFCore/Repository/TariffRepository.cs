@@ -13,21 +13,21 @@ namespace CongestionTaxCalculator.EFCore.Repository
             _cityRepository = new CityRepository(_context);
         }
 
-        public IEnumerable<TariffDefinition> GetTariff(int cityId, int startTariffYear, int tariffNO)
+        public IEnumerable<TariffDefinition> GetAllTariff(int cityId, int startTariffYear, int tariffNO)
             => _context.TariffDefinitions.Where(x => x.CityId == cityId && x.StartTariffYear == startTariffYear && x.TariffNO == tariffNO);
 
-        private TariffDefinition? GetActiveTariff(int cityId) 
-            => _context.TariffDefinitions.Where(x => x.CityId == cityId && x.IsActive)?.Include( z=> z.TariffCosts)
+        private TariffDefinition? GetActiveTariff(int cityId, int startTariffYear, int tariffNO) 
+            => _context.TariffDefinitions.Where(x => x.CityId == cityId && x.StartTariffYear == startTariffYear && x.TariffNO == tariffNO && x.IsActive)?.Include( z=> z.TariffCosts)
                                                                                       .Include(v=>v.ExemptVehicles)
                                                                                       .Include(t=>t.TariffSetting)
                                                                                           .ThenInclude(h=>h!.PublicHolidays).FirstOrDefault();
 
 
-        public TariffDefinition GetActiveTariff(string CityName)
+        public TariffDefinition GetActiveTariff(string cityName, int startTariffYear, int tariffNO)
         {
             
-            City city = _cityRepository.GetByName(CityName) ?? throw new ApplicationException("NotFoundCityException");
-            TariffDefinition tariffDefinition = GetActiveTariff(cityId: city.Id) ?? throw new ApplicationException("NotFoundTariffDefinitionException");     
+            City city = _cityRepository.GetByName(cityName) ?? throw new ApplicationException("NotFoundCityException");
+            TariffDefinition tariffDefinition = GetActiveTariff(cityId: city.Id, startTariffYear: startTariffYear, tariffNO:tariffNO) ?? throw new ApplicationException("NotFoundActiveTariffDefinitionException");     
             if(tariffDefinition.TariffCosts is null) throw new ApplicationException("NotFoundTariffCostsException");
             if (tariffDefinition.TariffSetting is null) throw new ApplicationException("NotFoundTariffSettingException");
             if (tariffDefinition.TariffSetting.PublicHolidays is null) throw new ApplicationException("NotFoundPublicHolidayException");

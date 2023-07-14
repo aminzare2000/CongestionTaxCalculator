@@ -47,9 +47,10 @@ namespace CongestionTaxCalculator.EFCore.Data
                     },
                     TariffSetting = new TariffSetting
                     {
-                        NumberTaxFreeDaysBeforeHoliday = 1,
+                        NumberTaxFreeDaysBeforeHoliday = 1,                        
                         MaxTaxAmount = 60.00m,
                         TaxFreeMonthCalender = MONTH.July,
+                        SingleCharegeInterval = 60,
                         PublicHolidays = new List<PublicHoliday>()
                                                     {
                                                         new PublicHoliday { DateHoliday = new DateTime(2013,1,2) },
@@ -58,13 +59,13 @@ namespace CongestionTaxCalculator.EFCore.Data
                                                         new PublicHoliday { DateHoliday = new DateTime(2013, 5, 10) },
                                                     },
                         WorkingDays = new List<WorkingDay>() {
-                                                        new WorkingDay { day = DAYS.Saturday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Sunday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Monday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Tuesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Thursday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Friday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Saturday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Sunday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Monday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Tuesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Wednesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Thursday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Friday, IsWeekend = false},
 
                                                     }
                     },
@@ -107,6 +108,7 @@ namespace CongestionTaxCalculator.EFCore.Data
                         NumberTaxFreeDaysBeforeHoliday = 1,
                         MaxTaxAmount = 60.00m,
                         TaxFreeMonthCalender = MONTH.July,
+                        SingleCharegeInterval = 60,
                         PublicHolidays = new List<PublicHoliday>()
                                                     {
                                                         new PublicHoliday { DateHoliday = new DateTime(2013,1,2) },
@@ -115,13 +117,13 @@ namespace CongestionTaxCalculator.EFCore.Data
                                                         new PublicHoliday { DateHoliday = new DateTime(2013, 5, 10) },
                                                     },
                         WorkingDays = new List<WorkingDay>() {
-                                                        new WorkingDay { day = DAYS.Saturday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Sunday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Monday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Thursday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Tuesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Friday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Saturday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Sunday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Monday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Thursday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Wednesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Tuesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Friday, IsWeekend = false},
 
                                                     }
                     },
@@ -164,6 +166,7 @@ namespace CongestionTaxCalculator.EFCore.Data
                         NumberTaxFreeDaysBeforeHoliday = 1,
                         MaxTaxAmount = 60.00m,
                         TaxFreeMonthCalender = MONTH.July,
+                        SingleCharegeInterval = 60,
                         PublicHolidays = new List<PublicHoliday>()
                                                     {
                                                         new PublicHoliday { DateHoliday = new DateTime(2013,1,2) },
@@ -172,13 +175,13 @@ namespace CongestionTaxCalculator.EFCore.Data
                                                         new PublicHoliday { DateHoliday = new DateTime(2013, 5, 10) },
                                                     },
                         WorkingDays = new List<WorkingDay>() {
-                                                        new WorkingDay { day = DAYS.Saturday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Sunday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Monday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Thursday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Tuesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Friday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Saturday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Sunday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Monday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Thursday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Wednesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Tuesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Friday, IsWeekend = false},
 
                                                     }
                     },
@@ -219,6 +222,7 @@ namespace CongestionTaxCalculator.EFCore.Data
                         NumberTaxFreeDaysBeforeHoliday = 1,
                         MaxTaxAmount = 60.00m,
                         TaxFreeMonthCalender = MONTH.July,
+                        SingleCharegeInterval = 60,
                         PublicHolidays = new List<PublicHoliday>()
                                                     {
                                                         new PublicHoliday { DateHoliday = new DateTime(2013,1,2) },
@@ -227,13 +231,13 @@ namespace CongestionTaxCalculator.EFCore.Data
                                                         new PublicHoliday { DateHoliday = new DateTime(2013, 5, 10) },
                                                     },
                         WorkingDays = new List<WorkingDay>() {
-                                                        new WorkingDay { day = DAYS.Saturday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Sunday, IsWeekend = true},
-                                                        new WorkingDay { day = DAYS.Monday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Thursday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Tuesday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Friday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Saturday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Sunday, IsWeekend = true},
+                                                        new WorkingDay { day = DayOfWeek.Monday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Thursday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Wednesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Tuesday, IsWeekend = false},
+                                                        new WorkingDay { day = DayOfWeek.Friday, IsWeekend = false},
 
                                                     }
                     },

@@ -15,6 +15,8 @@ namespace CongestionTaxCalculator.Domain.Persistence
 
         public MONTH TaxFreeMonthCalender { get; set; } = MONTH.July;
 
+        public int SingleCharegeInterval { get; set; } = 60;
+
         public TariffDefinition TariffDefinition { get; set; } = null!;
         public int TariffDefinitionId { get; set; }
 

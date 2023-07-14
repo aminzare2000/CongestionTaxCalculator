@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CongestionTaxCalculator.EFCore.Migrations
 {
     [DbContext(typeof(CongestionTaxContext))]
-    [Migration("20230713123915_init")]
+    [Migration("20230714185949_init")]
     partial class init
     {
         /// <inheritdoc />

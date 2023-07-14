@@ -1,4 +1,5 @@
-﻿using CongestionTaxCalculator.Domain.Common;
+﻿using System;
+using CongestionTaxCalculator.Domain.Common;
 
 namespace CongestionTaxCalculator.Domain.Model
 {
@@ -9,20 +10,23 @@ namespace CongestionTaxCalculator.Domain.Model
 
         public Decimal MaxTaxAmount { get; init; }
 
+        public int SingleCharegeInterval { get; init; }
+
         public MONTH TaxFreeMonthCalender { get; init; }
 
         private PublicHoliday[] _publicHolidays;
 
-        private DAYS[] _weekendDays;
+        private DayOfWeek[] _weekendDays;
 
         private TariffSetting() { }
 
         public TariffSetting(int numberTaxFreeDaysBeforeHoliday , Decimal maxTaxAmount,
-            MONTH taxFreeMonthCalender, PublicHoliday[] publicHolidays, DAYS[] weekendDays)
+            MONTH taxFreeMonthCalender, int singleCharegeInterval, PublicHoliday[] publicHolidays, DayOfWeek[] weekendDays)
         {
             this.NumberTaxFreeDaysBeforeHoliday = numberTaxFreeDaysBeforeHoliday;
             this.MaxTaxAmount = maxTaxAmount;
             this.TaxFreeMonthCalender = taxFreeMonthCalender;
+            this.SingleCharegeInterval = singleCharegeInterval;
 
             this._publicHolidays = new PublicHoliday[publicHolidays.Length];
             for (int i = 0; i < publicHolidays.Length; i++)
@@ -31,7 +35,7 @@ namespace CongestionTaxCalculator.Domain.Model
             }
 
 
-            this._weekendDays = new DAYS[weekendDays.Length];
+            this._weekendDays = new DayOfWeek[weekendDays.Length];
             for (int i = 0; i < weekendDays.Length; i++)
             {
                 this._weekendDays[i] = weekendDays[i];
@@ -42,6 +46,7 @@ namespace CongestionTaxCalculator.Domain.Model
         public TariffSetting(TariffSetting copyTariffSetting ) : this(copyTariffSetting.NumberTaxFreeDaysBeforeHoliday,
                 copyTariffSetting.MaxTaxAmount,
                 copyTariffSetting.TaxFreeMonthCalender,
+                copyTariffSetting.SingleCharegeInterval,
                 copyTariffSetting._publicHolidays,
                 copyTariffSetting._weekendDays)
         { }
@@ -54,7 +59,7 @@ namespace CongestionTaxCalculator.Domain.Model
             }
         }
 
-        public IEnumerable<DAYS> GetDays()
+        public IEnumerable<DayOfWeek> GetWeekendDays()
         {
             foreach (var item in _weekendDays)
             {
@@ -67,6 +72,7 @@ namespace CongestionTaxCalculator.Domain.Model
             if (NumberTaxFreeDaysBeforeHoliday == other.NumberTaxFreeDaysBeforeHoliday &&
                 MaxTaxAmount == other.MaxTaxAmount &&
                 TaxFreeMonthCalender == other.TaxFreeMonthCalender &&
+                SingleCharegeInterval == other.SingleCharegeInterval &&
                 _publicHolidays.Length == other._publicHolidays.Length &&
                 _weekendDays.Length == other._weekendDays.Length)
             {
@@ -92,6 +98,7 @@ namespace CongestionTaxCalculator.Domain.Model
                 int hashCode = NumberTaxFreeDaysBeforeHoliday.GetHashCode();
                 hashCode = (hashCode * 397) ^ MaxTaxAmount.GetHashCode();
                 hashCode = (hashCode * 397) ^ TaxFreeMonthCalender.GetHashCode();
+                hashCode = (hashCode * 397) ^ SingleCharegeInterval.GetHashCode();
                 foreach (var item in _publicHolidays)
                 {
                     hashCode = (hashCode * 397) ^ item.GetHashCode();
