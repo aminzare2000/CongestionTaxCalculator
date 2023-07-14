@@ -11,7 +11,7 @@ namespace CongestionTaxCalculator.EFCore.Repository
         {
         }
 
-        public City? GetByName(string name) => _context.Cities.Where(c=>c.Name == name)?.FirstOrDefault();
+        public City? GetByName(string name) => _context.Cities.Where(c=>c.Name.ToLower() == name.ToLower())?.FirstOrDefault();
 
     }
 }
