@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CongestionTaxCalculator.Domain.Persistence
 {
-    public class Vehicle
+    public class ExemptVehicle
     {
 
         public int Id { get; set; }
         public string VehicleType { get; set; } = String.Empty;
-
-        public virtual ICollection<CityVehicle>? CityVehicles { get; set; }
+        public TariffDefinition? TariffDefinition { get; set; }
+        public int TariffDefinitionId { get; set; }
     }
 }

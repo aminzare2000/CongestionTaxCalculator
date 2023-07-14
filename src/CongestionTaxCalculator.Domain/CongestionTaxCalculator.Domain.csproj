@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Model\CongestionTaxRule.cs" />
     <Compile Remove="Model\WorkingDay.cs" />
+    <Compile Remove="Persistence\InterfaceRepository\IWorkingDayRepository.cs" />
   </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />

@@ -28,8 +28,6 @@ namespace CongestionTaxCalculator.Domain.Persistence
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
 
-        public virtual ICollection<CityVehicle>? CityVehicles { get; set; }
-
         public virtual ICollection<TariffDefinition>? TariffDefinitions { get; set; }
         
     }

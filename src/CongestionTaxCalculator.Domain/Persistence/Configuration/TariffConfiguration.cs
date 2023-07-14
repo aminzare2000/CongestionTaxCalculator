@@ -21,6 +21,11 @@ namespace CongestionTaxCalculator.Domain.Persistence.Configuration
                 .WithOne(x => x.TariffDefinition)
                 .HasForeignKey(x => x.TariffDefinitionId);
 
+            builder.HasMany(x => x.ExemptVehicles)
+                .WithOne(x => x.TariffDefinition)
+                .HasForeignKey(x => x.TariffDefinitionId);
+
+
             builder.HasOne(c => c.TariffSetting)
                    .WithOne(c => c.TariffDefinition)
                    .HasForeignKey<TariffSetting>(c=>c.TariffDefinitionId)

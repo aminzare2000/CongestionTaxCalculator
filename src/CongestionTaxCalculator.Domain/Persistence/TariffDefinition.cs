@@ -17,6 +17,8 @@ namespace CongestionTaxCalculator.Domain.Persistence
         public City City { get; set; } = new City();
         public int CityId { get; set; }
 
+        public virtual ICollection<ExemptVehicle>? ExemptVehicles { get; set; }
+
         public virtual ICollection<TariffCost>? TariffCosts { get; set; }
 
         public TariffSetting? TariffSetting { get; set; }

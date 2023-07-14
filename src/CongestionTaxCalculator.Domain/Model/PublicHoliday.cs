@@ -19,10 +19,10 @@ namespace CongestionTaxCalculator.Domain.Model
             this.DateHoliday = new DateTime(dateHoliday.Year, dateHoliday.Month, dateHoliday.Day);
         }
 
-        public PublicHoliday(DateTime dateHoliday,string description)
+        public PublicHoliday(DateTime dateHoliday,string? description)
         {
             this.DateHoliday = new DateTime(dateHoliday.Year, dateHoliday.Month, dateHoliday.Day);
-            this.Description = description; 
+            this.Description = description ?? String.Empty; 
         }
 
         protected override bool EqualsCore(PublicHoliday other) => DateHoliday.CompareTo(other.DateHoliday) == 0 && Description == other.Description;

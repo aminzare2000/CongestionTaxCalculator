@@ -2,19 +2,19 @@
 
 namespace CongestionTaxCalculator.Domain.Model
 {
-    public sealed class Vehicle : ValueObject<Vehicle>
+    public sealed class ExemptVehicle : ValueObject<ExemptVehicle>
     {
         public string VehicleType { get; init; }// = String.Empty;
 
-        public Vehicle(string VehicleType)
+        public ExemptVehicle(string? VehicleType)
         {
-            this.VehicleType = VehicleType;
+            this.VehicleType = VehicleType!;
         }
-        public Vehicle(Vehicle vehicle ) : this(vehicle.VehicleType) { }
+        public ExemptVehicle(ExemptVehicle vehicle ) : this(vehicle.VehicleType) { }
 
        
 
-    protected override bool EqualsCore(Vehicle other)
+    protected override bool EqualsCore(ExemptVehicle other)
         {
             return VehicleType == other.VehicleType;
         }

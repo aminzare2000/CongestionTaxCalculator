@@ -8,6 +8,8 @@ namespace CongestionTaxCalculator.Domain.Persistence.InterfaceRepository
 {
     public interface ITariffDefinitionRepository : IRepository<TariffDefinition>
     {
-        IEnumerable<TariffDefinition> GetTariff(int CityId, int StartTariffYear, int TariffNO);
+        public IEnumerable<TariffDefinition> GetTariff(int cityId, int startTariffYear, int tariffNO);
+
+        public TariffDefinition GetActiveTariff(string CityName);
     }
 }

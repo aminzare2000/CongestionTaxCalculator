@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 //https://code-maze.com/migrations-and-seed-data-efcore/
 namespace CongestionTaxCalculator.Domain.Persistence.Configuration
 {
-    public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
+    public class VehicleConfiguration : IEntityTypeConfiguration<ExemptVehicle>
     {
-        public void Configure(EntityTypeBuilder<Vehicle> builder)
+        public void Configure(EntityTypeBuilder<ExemptVehicle> builder)
         {
             builder.Property(v => v.VehicleType)
                 .HasMaxLength(50);
-            builder.HasIndex(v => v.VehicleType).IsUnique();
+            builder.HasIndex(v => v.VehicleType);
 
-            builder.HasMany(x => x.CityVehicles).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId);
+            builder.HasOne(x => x.TariffDefinition).WithMany(x => x.ExemptVehicles).HasForeignKey(x => x.TariffDefinitionId);
 
         }
     }
