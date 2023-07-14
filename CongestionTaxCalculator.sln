@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.Inf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.EFCore", "src\CongestionTaxCalculator.EFCore\CongestionTaxCalculator.EFCore.csproj", "{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongestionTaxCalculator.Application", "src\CongestionTaxCalculator.Application\CongestionTaxCalculator.Application.csproj", "{E1F0C982-7B39-4315-93F0-34C288EBF9AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongestionTaxCalculator.Application.Contracts", "src\CongestionTaxCalculator.Application.Contracts\CongestionTaxCalculator.Application.Contracts.csproj", "{9E416D37-37E8-45DB-9BEA-6C0D332449F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongestionTaxCalculator.Test", "test\CongestionTaxCalculator.Test\CongestionTaxCalculator.Test.csproj", "{20DBC32E-0D87-4104-9441-18F6AAF6AAA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,18 @@ Global
 		{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BE4104B-ED6D-4A88-B4C4-8C120DF7F737}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F0C982-7B39-4315-93F0-34C288EBF9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F0C982-7B39-4315-93F0-34C288EBF9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F0C982-7B39-4315-93F0-34C288EBF9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F0C982-7B39-4315-93F0-34C288EBF9AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E416D37-37E8-45DB-9BEA-6C0D332449F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E416D37-37E8-45DB-9BEA-6C0D332449F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E416D37-37E8-45DB-9BEA-6C0D332449F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E416D37-37E8-45DB-9BEA-6C0D332449F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20DBC32E-0D87-4104-9441-18F6AAF6AAA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20DBC32E-0D87-4104-9441-18F6AAF6AAA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20DBC32E-0D87-4104-9441-18F6AAF6AAA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20DBC32E-0D87-4104-9441-18F6AAF6AAA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
