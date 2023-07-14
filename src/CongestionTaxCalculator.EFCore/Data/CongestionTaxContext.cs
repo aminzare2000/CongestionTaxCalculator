@@ -18,18 +18,21 @@ namespace CongestionTaxCalculator.EFCore.Data
             
         }
 
-        
+        public CongestionTaxContext():base()
+        {
 
-        public DbSet<City> Cities => Set<City>();
-        public DbSet<ExemptVehicle> ExemptVehicles => Set<ExemptVehicle>();
-        public DbSet<TariffDefinition> TariffDefinitions => Set<TariffDefinition>();
-        public DbSet<TariffCost> TariffCosts => Set<TariffCost>();
+        }
 
-        public DbSet<TariffSetting> TariffSettings => Set<TariffSetting>();
+        public virtual DbSet<City> Cities => Set<City>();
+        public virtual DbSet<ExemptVehicle> ExemptVehicles => Set<ExemptVehicle>();
+        public virtual DbSet<TariffDefinition> TariffDefinitions => Set<TariffDefinition>();
+        public virtual DbSet<TariffCost> TariffCosts => Set<TariffCost>();
 
-        public DbSet<PublicHoliday> PublicHolidays => Set<PublicHoliday>();
+        public virtual DbSet<TariffSetting> TariffSettings => Set<TariffSetting>();
 
-        public DbSet<WorkingDay> WorkingDays => Set<WorkingDay>();
+        public virtual DbSet<PublicHoliday> PublicHolidays => Set<PublicHoliday>();
+
+        public virtual DbSet<WorkingDay> WorkingDays => Set<WorkingDay>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

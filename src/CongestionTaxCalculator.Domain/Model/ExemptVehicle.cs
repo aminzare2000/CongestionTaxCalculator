@@ -6,9 +6,9 @@ namespace CongestionTaxCalculator.Domain.Model
     {
         public string VehicleType { get; init; }// = String.Empty;
 
-        public ExemptVehicle(string? VehicleType)
+        public ExemptVehicle(string? vehicleType)
         {
-            this.VehicleType = VehicleType!;
+            this.VehicleType = vehicleType!;
         }
         public ExemptVehicle(ExemptVehicle vehicle ) : this(vehicle.VehicleType) { }
 

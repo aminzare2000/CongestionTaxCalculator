@@ -64,12 +64,44 @@ namespace CongestionTaxCalculator.Domain.Model
 
         protected override bool EqualsCore(TariffSetting other)
         {
-            throw new NotImplementedException();
+            if (NumberTaxFreeDaysBeforeHoliday == other.NumberTaxFreeDaysBeforeHoliday &&
+                MaxTaxAmount == other.MaxTaxAmount &&
+                TaxFreeMonthCalender == other.TaxFreeMonthCalender &&
+                _publicHolidays.Length == other._publicHolidays.Length &&
+                _weekendDays.Length == other._weekendDays.Length)
+            {
+                foreach (var item in _publicHolidays)
+                {
+                    if (!other._publicHolidays.Contains(item)) return false;
+                }
+
+                foreach (var item in _weekendDays)
+                {
+                    if (!other._weekendDays.Contains(item)) return false;
+                }
+                return true;
+            }
+            else
+                return false;
         }
 
         protected override int GetHashCodeCore()
         {
-            throw new NotImplementedException();
+            unchecked
+            {
+                int hashCode = NumberTaxFreeDaysBeforeHoliday.GetHashCode();
+                hashCode = (hashCode * 397) ^ MaxTaxAmount.GetHashCode();
+                hashCode = (hashCode * 397) ^ TaxFreeMonthCalender.GetHashCode();
+                foreach (var item in _publicHolidays)
+                {
+                    hashCode = (hashCode * 397) ^ item.GetHashCode();
+                }
+                foreach (var item in _weekendDays)
+                {
+                    hashCode = (hashCode * 397) ^ item.GetHashCode();
+                }
+                return hashCode;
+            }
         }
     }
 }

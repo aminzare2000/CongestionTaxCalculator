@@ -61,9 +61,9 @@ namespace CongestionTaxCalculator.EFCore.Data
                                                         new WorkingDay { day = DAYS.Saturday, IsWeekend = true},
                                                         new WorkingDay { day = DAYS.Sunday, IsWeekend = true},
                                                         new WorkingDay { day = DAYS.Monday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Thursday, IsWeekend = false},
-                                                        new WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
                                                         new WorkingDay { day = DAYS.Tuesday, IsWeekend = false},
+                                                        new WorkingDay { day = DAYS.Wednesday, IsWeekend = false},
+                                                        new WorkingDay { day = DAYS.Thursday, IsWeekend = false},
                                                         new WorkingDay { day = DAYS.Friday, IsWeekend = false},
 
                                                     }
