@@ -15,12 +15,13 @@ namespace CongestionTaxCalculator.EFCore.Data
     {
         public CongestionTaxContext(DbContextOptions<CongestionTaxContext> options) : base(options)
         {
+            
         }
 
-        public DbSet<City> Cities => Set<City>();
-        public DbSet<Vehicle> Vehicles => Set<Vehicle>();
-        public DbSet<CityVehicle> CityVehicles => Set<CityVehicle>();
+        
 
+        public DbSet<City> Cities => Set<City>();
+        public DbSet<ExemptVehicle> ExemptVehicles => Set<ExemptVehicle>();
         public DbSet<TariffDefinition> TariffDefinitions => Set<TariffDefinition>();
         public DbSet<TariffCost> TariffCosts => Set<TariffCost>();
 
@@ -35,7 +36,6 @@ namespace CongestionTaxCalculator.EFCore.Data
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new CityConfiguration());
             builder.ApplyConfiguration(new VehicleConfiguration());
-            builder.ApplyConfiguration(new CityVehicleConfiguration());
 
             builder.ApplyConfiguration(new TariffDefineConfiguration());
             builder.ApplyConfiguration(new TariffDefineConfiguration());
@@ -57,15 +57,15 @@ namespace CongestionTaxCalculator.EFCore.Data
             //builder.Entity<City>()
             //    .HasIndex(c => c.Name).IsUnique();
 
-            //builder.Entity<Vehicle>()
+            //builder.Entity<ExemptVehicle>()
             //                .Property(v => v.VehicleType)
             //                .HasMaxLength(50);
 
-            //builder.Entity<Vehicle>()
+            //builder.Entity<ExemptVehicle>()
             //                .HasIndex(v => v.VehicleType).IsUnique();
 
             //builder.Entity<City>().HasMany(x => x.CityVehicles).WithOne(x => x.City).HasForeignKey(x => x.CityId);
-            //builder.Entity<Vehicle>().HasMany(x => x.CityVehicles).WithOne(x => x.Vehicle).HasForeignKey(x => x.VehicleId);
+            //builder.Entity<ExemptVehicle>().HasMany(x => x.CityVehicles).WithOne(x => x.ExemptVehicle).HasForeignKey(x => x.VehicleId);
             //builder.Entity<CityVehicle>().HasKey(x => new { x.CityId, x.VehicleId });
 
 
@@ -85,6 +85,7 @@ namespace CongestionTaxCalculator.EFCore.Data
         {
             optionsBuilder.EnableDetailedErrors(true);
             optionsBuilder.EnableSensitiveDataLogging(true);
+            
         }
     }
 }

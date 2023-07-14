@@ -25,19 +25,6 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VehicleType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vehicles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "WorkingDays",
                 columns: table => new
                 {
@@ -74,26 +61,21 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CityVehicles",
+                name: "ExemptVehicles",
                 columns: table => new
                 {
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false),
-                    IsExempt = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VehicleType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TariffDefinitionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CityVehicles", x => new { x.CityId, x.VehicleId });
+                    table.PrimaryKey("PK_ExemptVehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CityVehicles_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CityVehicles_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
+                        name: "FK_ExemptVehicles_TariffDefinitions_TariffDefinitionId",
+                        column: x => x.TariffDefinitionId,
+                        principalTable: "TariffDefinitions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -194,9 +176,14 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CityVehicles_VehicleId",
-                table: "CityVehicles",
-                column: "VehicleId");
+                name: "IX_ExemptVehicles_TariffDefinitionId",
+                table: "ExemptVehicles",
+                column: "TariffDefinitionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExemptVehicles_VehicleType",
+                table: "ExemptVehicles",
+                column: "VehicleType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PublicHolidays_TariffSettingId",
@@ -224,19 +211,13 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                 name: "IX_TariffSettingWorkingDay_WorkingDaysId",
                 table: "TariffSettingWorkingDay",
                 column: "WorkingDaysId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_VehicleType",
-                table: "Vehicles",
-                column: "VehicleType",
-                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CityVehicles");
+                name: "ExemptVehicles");
 
             migrationBuilder.DropTable(
                 name: "PublicHolidays");
@@ -246,9 +227,6 @@ namespace CongestionTaxCalculator.EFCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "TariffSettingWorkingDay");
-
-            migrationBuilder.DropTable(
-                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "TariffSettings");

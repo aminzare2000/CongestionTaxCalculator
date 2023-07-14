@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CongestionTaxCalculator.EFCore.Migrations
 {
     [DbContext(typeof(CongestionTaxContext))]
-    [Migration("20230710202631_init")]
+    [Migration("20230713123915_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -46,22 +46,29 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.CityVehicle", b =>
+            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.ExemptVehicle", b =>
                 {
-                    b.Property<int>("CityId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("VehicleId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("TariffDefinitionId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsExempt")
-                        .HasColumnType("bit");
+                    b.Property<string>("VehicleType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("CityId", "VehicleId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("VehicleId");
+                    b.HasIndex("TariffDefinitionId");
 
-                    b.ToTable("CityVehicles");
+                    b.HasIndex("VehicleType");
+
+                    b.ToTable("ExemptVehicles");
                 });
 
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.PublicHoliday", b =>
@@ -173,27 +180,6 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                     b.ToTable("TariffSettings");
                 });
 
-            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.Vehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("VehicleType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehicleType")
-                        .IsUnique();
-
-                    b.ToTable("Vehicles");
-                });
-
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.WorkingDay", b =>
                 {
                     b.Property<int>("Id")
@@ -228,23 +214,15 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                     b.ToTable("TariffSettingWorkingDay");
                 });
 
-            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.CityVehicle", b =>
+            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.ExemptVehicle", b =>
                 {
-                    b.HasOne("CongestionTaxCalculator.Domain.Persistence.City", "City")
-                        .WithMany("CityVehicles")
-                        .HasForeignKey("CityId")
+                    b.HasOne("CongestionTaxCalculator.Domain.Persistence.TariffDefinition", "TariffDefinition")
+                        .WithMany("ExemptVehicles")
+                        .HasForeignKey("TariffDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CongestionTaxCalculator.Domain.Persistence.Vehicle", "Vehicle")
-                        .WithMany("CityVehicles")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
-
-                    b.Navigation("Vehicle");
+                    b.Navigation("TariffDefinition");
                 });
 
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.PublicHoliday", b =>
@@ -308,13 +286,13 @@ namespace CongestionTaxCalculator.EFCore.Migrations
 
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.City", b =>
                 {
-                    b.Navigation("CityVehicles");
-
                     b.Navigation("TariffDefinitions");
                 });
 
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.TariffDefinition", b =>
                 {
+                    b.Navigation("ExemptVehicles");
+
                     b.Navigation("TariffCosts");
 
                     b.Navigation("TariffSetting");
@@ -323,11 +301,6 @@ namespace CongestionTaxCalculator.EFCore.Migrations
             modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.TariffSetting", b =>
                 {
                     b.Navigation("PublicHolidays");
-                });
-
-            modelBuilder.Entity("CongestionTaxCalculator.Domain.Persistence.Vehicle", b =>
-                {
-                    b.Navigation("CityVehicles");
                 });
 #pragma warning restore 612, 618
         }

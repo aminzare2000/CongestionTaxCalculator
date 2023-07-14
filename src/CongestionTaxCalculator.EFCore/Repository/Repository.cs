@@ -23,6 +23,12 @@ namespace CongestionTaxCalculator.EFCore.Repository
             return entity;
         }
 
+        public async Task AddRange(List<T> entitylist)
+        {
+            _context.Set<T>().AddRange(entitylist);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<T> Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
@@ -43,7 +49,6 @@ namespace CongestionTaxCalculator.EFCore.Repository
 
             return entity;
         }
-
 
     }
 }
