@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace CongestionTaxCalculator.Application.Contracts
 {
-    public interface ICongestionTaxAppService
-    {
-        public Decimal GetTax(CongestionTaxRequestDto request);
+    public interface ITariffAppService
+    {        
+        public City GetACity(string name);
+        public TariffDefinition GenrateTariffDefination(CongestionTaxRequestDto request);
+
 
     }
 }

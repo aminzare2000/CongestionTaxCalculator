@@ -111,6 +111,7 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                     NumberTaxFreeDaysBeforeHoliday = table.Column<int>(type: "int", nullable: false),
                     MaxTaxAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TaxFreeMonthCalender = table.Column<int>(type: "int", nullable: false),
+                    SingleCharegeInterval = table.Column<int>(type: "int", nullable: false),
                     TariffDefinitionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

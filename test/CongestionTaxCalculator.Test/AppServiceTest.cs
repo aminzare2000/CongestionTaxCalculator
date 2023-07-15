@@ -14,9 +14,9 @@ using CongestionTaxCalculator.Domain.Persistence.InterfaceRepository;
 using Persistence = CongestionTaxCalculator.Domain.Persistence;
 using CongestionTaxCalculator.Domain.Common;
 using System.Threading.Tasks;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using System.Data.Entity;
 using System.Linq;
+using System.Globalization;
+using Microsoft.VisualBasic;
 
 //https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices
 
@@ -25,18 +25,18 @@ namespace CongestionTaxCalculator.Test
 
     public class AppServiceTest : IDisposable
     {
-
+        private static readonly CultureInfo  provider = new CultureInfo("en-GB");
         private static readonly Fixture Fixture = new Fixture();
-        //private readonly Mock<ICityRepository> repoCity;
 
 
-        private readonly DbContextOptions<CongestionTaxContext> _options;
-        private readonly ICongestionTaxAppService _congestionTaxAppService;
-        private readonly CongestionTaxContext _context;
+        //private readonly DbContextOptions<CongestionTaxContext> _options;
+        //private readonly ITariffAppService _congestionTaxAppService;
+        //private readonly CongestionTaxContext _context;
 
 
         public AppServiceTest()
         {
+            
             //repoCity = new Mock<ICityRepository>();
 
             //_options = new DbContextOptionsBuilder<_context>()
@@ -54,8 +54,8 @@ namespace CongestionTaxCalculator.Test
 
         public async void Dispose()
         {
-            if (_context != null)
-                await _context.Database.EnsureDeletedAsync();
+            //if (_context != null)
+            //    await _context.Database.EnsureDeletedAsync();
         }
 
 
@@ -68,14 +68,14 @@ namespace CongestionTaxCalculator.Test
         [InlineData("London", "London")]
         public void When_Exist_City_Return(string input, string expected)
         {
-
+            
             // Arrange
             var datalist = TariffDefinitionSample.GetPersistenceTariffDefinations().Select(x => x.City).ToList();
             var mockContext = new Mock<CongestionTaxContext>();
             mockContext.Setup(p => p.Cities).Returns(DbContextMock.GetQueryableMockDbSet<Persistence.City>(datalist));
 
 
-            CongestionTaxAppService congestionTaxAppService = new CongestionTaxAppService(mockContext.Object);
+            ITariffAppService congestionTaxAppService = new TariffAppService(mockContext.Object);
 
             // Act
             var actual = congestionTaxAppService.GetACity(input).Name;
@@ -98,7 +98,7 @@ namespace CongestionTaxCalculator.Test
             mockContext.Setup(p => p.Cities).Returns(DbContextMock.GetQueryableMockDbSet<Persistence.City>(datalist));
 
 
-            CongestionTaxAppService congestionTaxAppService = new CongestionTaxAppService(mockContext.Object);
+            ITariffAppService congestionTaxAppService = new TariffAppService(mockContext.Object);
 
             // Act
             var actual = congestionTaxAppService.GetACity(input).Name;
@@ -108,7 +108,7 @@ namespace CongestionTaxCalculator.Test
 
         }
 
-        public static IEnumerable<object[]> CompleteData =>
+        public static IEnumerable<object[]> CompleteTariffDefinition =>
         new List<object[]> {
                 // Complete Tariff
                  new object[] {
@@ -317,7 +317,7 @@ namespace CongestionTaxCalculator.Test
 
 
         [Theory]
-        [MemberData(nameof(CompleteData))]
+        [MemberData(nameof(CompleteTariffDefinition))]
         public void Test_Read_CompleteTariffDefination_Return_Model_TariffDefination(Persistence.TariffDefinition input, Model.TariffDefinition expected)
         {
 
@@ -335,8 +335,7 @@ namespace CongestionTaxCalculator.Test
             if(inputVehicle is not null) mockContext.Setup(p => p.ExemptVehicles).Returns(DbContextMock.GetQueryableMockDbSet<Persistence.ExemptVehicle>(inputVehicle));
             if (inputCity is not null) mockContext.Setup(p => p.Cities).Returns(DbContextMock.GetQueryableMockDbSet<Persistence.City>(inputCity));
 
-
-            CongestionTaxAppService congestionTaxAppService = new CongestionTaxAppService(mockContext.Object);
+            ITariffAppService congestionTaxAppService = new TariffAppService(mockContext.Object);
 
             // Act
             Model.TariffDefinition actual = congestionTaxAppService.GenrateTariffDefination(request);
@@ -367,12 +366,176 @@ namespace CongestionTaxCalculator.Test
 
         }
 
+
+        public static IEnumerable<object[]> TrueRequest =>
+        new List<object[]> {
+                // Request1
+                 new object[] {
+                    //input                     
+                     new CongestionTaxRequestDto()
+                     {
+                         CityName="Gothenburg",
+                         StartTariffYear=2013,
+                         TariffNO=1,
+                         VehicleType="Bus",
+                         TrafficTimeSequence = new List<DateTime>()
+                         {
+                                DateTime.ParseExact("2013-01-14 06:00:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-01-15 08:10:00", "yyyy-MM-dd HH:mm:ss", provider),
+                         }
+                     },
+                     new Model.TariffDefinition(
+                                                    tariffNO:1,
+                                                    startTariffYear:2013,
+                                                    isActive:true,
+                                                    city:new Model.City(name:"Gothenburg"),
+                                                    exemptVehicles:new Model.ExemptVehicle[] {
+                                                                new Model.ExemptVehicle(vehicleType:"Emergency"),
+                                                                new Model.ExemptVehicle(vehicleType:"Bus"),
+                                                                new Model.ExemptVehicle(vehicleType:"Diplomat"),
+                                                                new Model.ExemptVehicle(vehicleType:"Motorcycles"),
+                                                                new Model.ExemptVehicle(vehicleType:"Foreign"),
+                                                                },
+                                                    tariffCosts:new Model.TariffCost[]
+                                                    {
+
+                                                        new Model.TariffCost( fromTime : new TimeSpan(0, 0, 0), toTime : new TimeSpan(5, 59, 59), amount : 0.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(6, 0, 0), toTime : new TimeSpan(6, 29, 59), amount : 8.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(6, 30, 0), toTime : new TimeSpan(6, 59, 59), amount : 13.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(7, 0, 0), toTime : new TimeSpan(7, 59, 59), amount : 18.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(8, 0, 0), toTime : new TimeSpan(8, 29, 59), amount : 13.00m ),
+
+                                                        new Model.TariffCost( fromTime : new TimeSpan(8, 30, 0), toTime : new TimeSpan(14, 59, 59), amount : 8.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(15, 0, 0), toTime : new TimeSpan(15, 29, 59), amount : 13.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(15, 30, 0), toTime : new TimeSpan(16, 59, 59), amount : 18.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(17, 0, 0), toTime : new TimeSpan(17, 59, 59), amount : 13.00m ),
+
+                                                        new Model.TariffCost( fromTime : new TimeSpan(18, 0, 0), toTime : new TimeSpan(18, 29, 59), amount : 8.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(18, 30, 0), toTime : new TimeSpan(23, 59, 59), amount : 0.00m )
+                                                    },
+                                                    tariffSetting:new Model.TariffSetting(
+                                                            numberTaxFreeDaysBeforeHoliday : 1,
+                                                            maxTaxAmount : 60.00m,
+                                                            taxFreeMonthCalender : MONTH.July,
+                                                            singleCharegeInterval:60,
+                                                            publicHolidays: new Model.PublicHoliday[] {
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013,1,2) ),
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013, 4, 7) ),
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013, 4, 10) ),
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013, 5, 10) ),
+                                                            },
+                                                            weekendDays: new DayOfWeek[] {
+                                                                DayOfWeek.Saturday,
+                                                                DayOfWeek.Sunday
+                                                            }
+                                                        )
+                                                ),
+                     //expected
+                     new Decimal(0)
+                },
+        
+                 // // Request1
+                 new object[] {
+                     new CongestionTaxRequestDto()
+                     {
+                         CityName="Gothenburg",
+                         StartTariffYear=2013,
+                         TariffNO=1,
+                         VehicleType="Car",
+                         TrafficTimeSequence = new List<DateTime>()
+                         {
+                                DateTime.ParseExact("2013-01-14 21:00:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-01-15 21:00:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-07 06:23:27", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-07 15:27:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 06:27:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 06:20:27", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 14:35:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 15:29:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 15:47:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 16:01:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 16:48:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 17:49:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 18:29:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-02-08 18:35:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-03-26 14:25:00", "yyyy-MM-dd HH:mm:ss", provider),
+                                DateTime.ParseExact("2013-03-28 14:07:27", "yyyy-MM-dd HH:mm:ss", provider),
+                         }
+                     },
+                     new Model.TariffDefinition(
+                                                    tariffNO:1,
+                                                    startTariffYear:2013,
+                                                    isActive:true,
+                                                    city:new Model.City(name:"Gothenburg"),
+                                                    exemptVehicles:new Model.ExemptVehicle[] {
+                                                                new Model.ExemptVehicle(vehicleType:"Emergency"),
+                                                                new Model.ExemptVehicle(vehicleType:"Bus"),
+                                                                new Model.ExemptVehicle(vehicleType:"Diplomat"),
+                                                                new Model.ExemptVehicle(vehicleType:"Motorcycles"),
+                                                                new Model.ExemptVehicle(vehicleType:"Foreign"),
+                                                                },
+                                                    tariffCosts:new Model.TariffCost[]
+                                                    {
+
+                                                        new Model.TariffCost( fromTime : new TimeSpan(0, 0, 0), toTime : new TimeSpan(5, 59, 59), amount : 0.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(6, 0, 0), toTime : new TimeSpan(6, 29, 59), amount : 8.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(6, 30, 0), toTime : new TimeSpan(6, 59, 59), amount : 13.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(7, 0, 0), toTime : new TimeSpan(7, 59, 59), amount : 18.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(8, 0, 0), toTime : new TimeSpan(8, 29, 59), amount : 13.00m ),
+
+                                                        new Model.TariffCost( fromTime : new TimeSpan(8, 30, 0), toTime : new TimeSpan(14, 59, 59), amount : 8.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(15, 0, 0), toTime : new TimeSpan(15, 29, 59), amount : 13.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(15, 30, 0), toTime : new TimeSpan(16, 59, 59), amount : 18.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(17, 0, 0), toTime : new TimeSpan(17, 59, 59), amount : 13.00m ),
+
+                                                        new Model.TariffCost( fromTime : new TimeSpan(18, 0, 0), toTime : new TimeSpan(18, 29, 59), amount : 8.00m ),
+                                                        new Model.TariffCost( fromTime : new TimeSpan(18, 30, 0), toTime : new TimeSpan(23, 59, 59), amount : 0.00m )
+                                                    },
+                                                    tariffSetting:new Model.TariffSetting(
+                                                            numberTaxFreeDaysBeforeHoliday : 1,
+                                                            maxTaxAmount : 60.00m,
+                                                            taxFreeMonthCalender : MONTH.July,
+                                                            singleCharegeInterval:60,
+                                                            publicHolidays: new Model.PublicHoliday[] {
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013,1,2) ),
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013,1,14) ),
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013, 4, 7) ),
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013, 4, 10) ),
+                                                                new Model.PublicHoliday( dateHoliday : new DateTime(2013, 5, 10) ),
+                                                            },
+                                                            weekendDays: new DayOfWeek[] {
+                                                                DayOfWeek.Saturday,
+                                                                DayOfWeek.Sunday
+                                                            }
+                                                        )
+                                                ),
+                     //expected
+                     new Decimal(18)
+                }
+
+
+        };
+        [Theory]
+        [MemberData(nameof(TrueRequest))]
+        public void Test_GetTax_ValidRequest_CompleteTariffDefination_Rturn_Fee(CongestionTaxRequestDto inputRequest, Model.TariffDefinition inputTariffDefinition, Decimal expected)
+        {
+            //Arrange
+            ICongestionTaxAppService congestionTaxAppService = new CongestionTaxAppService(inputTariffDefinition);
+
+            //Act
+            Decimal actual = congestionTaxAppService.GetTax(inputRequest);
+
+            //Asserts
+            Assert.Equal(actual, expected);
+        }
+
+
         private void TestCongestionTaxInitData()
         {
 
         }
 
-        private void GenerateCompleteCongestionTaxInitData11()
+        /*private void GenerateCompleteCongestionTaxInitData11()
         {
 
 
@@ -502,7 +665,7 @@ namespace CongestionTaxCalculator.Test
             #endregion
             _context.SaveChanges();
 
-        }
+        }*/
 
         private IList<CongestionTaxRequestDto> GenerateRequest()
         {

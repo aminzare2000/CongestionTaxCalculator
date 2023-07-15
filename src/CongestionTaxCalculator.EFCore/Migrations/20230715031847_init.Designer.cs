@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CongestionTaxCalculator.EFCore.Migrations
 {
     [DbContext(typeof(CongestionTaxContext))]
-    [Migration("20230714185949_init")]
+    [Migration("20230715031847_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -164,6 +164,9 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("NumberTaxFreeDaysBeforeHoliday")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SingleCharegeInterval")
                         .HasColumnType("int");
 
                     b.Property<int>("TariffDefinitionId")

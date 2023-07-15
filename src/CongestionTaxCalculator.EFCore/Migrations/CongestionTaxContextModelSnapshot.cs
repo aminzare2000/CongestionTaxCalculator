@@ -163,6 +163,9 @@ namespace CongestionTaxCalculator.EFCore.Migrations
                     b.Property<int>("NumberTaxFreeDaysBeforeHoliday")
                         .HasColumnType("int");
 
+                    b.Property<int>("SingleCharegeInterval")
+                        .HasColumnType("int");
+
                     b.Property<int>("TariffDefinitionId")
                         .HasColumnType("int");
 

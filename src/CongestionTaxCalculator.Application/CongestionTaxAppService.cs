@@ -13,44 +13,28 @@ namespace CongestionTaxCalculator.Application
 {
     public class CongestionTaxAppService : ICongestionTaxAppService
     {
-        private readonly ITariffDefinitionRepository _tariffDefinitionRepository;
-        private readonly ICityRepository _cityRepository;
+        private readonly TariffDefinition _tariffDefinition;
 
-        public CongestionTaxAppService(CongestionTaxContext context)
+        public CongestionTaxAppService(TariffDefinition tariffDefinition)
         {
-            _tariffDefinitionRepository = new TariffDefinitionRepository(context);
-            _cityRepository = new CityRepository(context);
+            this._tariffDefinition = new TariffDefinition(tariffDefinition);
         }
-        public Model.City GetACity(string name) => MyMapper.Map(_cityRepository.GetByName(name)!);
-
-        /// <summary>
-        /// This function generate TariffDefination value object based on request
-        /// </summary>
-        public TariffDefinition GenrateTariffDefination(CongestionTaxRequestDto request)
+        private bool IsTollFreeVehicle(string vehicleType)
         {
-
-            Persistence.TariffDefinition pTariffDefinition = _tariffDefinitionRepository.GetActiveTariff(cityName: request.CityName,
-                                                                                                         startTariffYear: request.StartTariffYear,
-                                                                                                         tariffNO: request.TariffNO);
-            return (new TariffDefinition(MyMapper.Map(pTariffDefinition)));
+            return _tariffDefinition.GetExemptVehicles().Any(vehicle => vehicle.VehicleType == vehicleType);
         }
 
-        private bool IsTollFreeVehicle(string vehicleType, TariffDefinition tariffDefinition)
-        {
-            return tariffDefinition.GetExemptVehicles().Any(vehicle => vehicle.VehicleType == vehicleType);
-        }
-
-        private bool IsTollFreeDate(DateTime date, TariffDefinition tariffDefinition)
+        private bool IsTollFreeDate(DateTime date)
         {
 
             bool flagPublicHoliday = false;
-            flagPublicHoliday = tariffDefinition.TariffSetting.GetPublicHolidays().ToList().Any(x => x.DateHoliday.Year == date.Year &&
+            flagPublicHoliday = _tariffDefinition.TariffSetting.GetPublicHolidays().ToList().Any(x => x.DateHoliday.Year == date.Year &&
                                                                                x.DateHoliday.Month == date.Month &&
                                                                                x.DateHoliday.Day == date.Day);
             bool flagDaysBeforePublicHoliday = false;
-            foreach (var hday in tariffDefinition.TariffSetting.GetPublicHolidays().ToList())
+            foreach (var hday in _tariffDefinition.TariffSetting.GetPublicHolidays().ToList())
             {
-                var beforeHday = hday.DateHoliday.Subtract(TimeSpan.FromDays(tariffDefinition.TariffSetting.NumberTaxFreeDaysBeforeHoliday));
+                var beforeHday = hday.DateHoliday.Subtract(TimeSpan.FromDays(_tariffDefinition.TariffSetting.NumberTaxFreeDaysBeforeHoliday));
                 if (beforeHday.Year == date.Year && beforeHday.Month == date.Month && beforeHday.Day == date.Day)
                 {
                     flagDaysBeforePublicHoliday = true;
@@ -60,12 +44,12 @@ namespace CongestionTaxCalculator.Application
 
 
             bool flagWeekend = false;
-            if (tariffDefinition.TariffSetting.GetWeekendDays().ToList().Contains(date.DayOfWeek))
+            if (_tariffDefinition.TariffSetting.GetWeekendDays().ToList().Contains(date.DayOfWeek))
                 flagWeekend = true;
 
 
             bool flagTaxFreeMonthCalender = false;
-            if (date.Month == (int)tariffDefinition.TariffSetting.TaxFreeMonthCalender)
+            if (date.Month == (int)_tariffDefinition.TariffSetting.TaxFreeMonthCalender)
                 flagTaxFreeMonthCalender = true;
 
             if (flagPublicHoliday || flagDaysBeforePublicHoliday || flagWeekend || flagTaxFreeMonthCalender)
@@ -73,10 +57,10 @@ namespace CongestionTaxCalculator.Application
             return false;
         }
 
-        public Decimal GetTaxRule(DateTime datetime, TariffDefinition tariffDefinition)
+        private Decimal GetTaxRule(DateTime datetime)
         {
             Decimal tax = 0;
-            foreach (var tariffCost in tariffDefinition.GetTariffCosts().ToList())
+            foreach (var tariffCost in _tariffDefinition.GetTariffCosts().ToList())
             {
                 TimeRange tariffRange = new TimeRange(TimeOnly.FromTimeSpan(tariffCost.FromTime), TimeOnly.FromTimeSpan(tariffCost.ToTime));
                 if (tariffRange.InRange(TimeOnly.FromDateTime(datetime)))
@@ -90,10 +74,8 @@ namespace CongestionTaxCalculator.Application
 
         public Decimal GetTax(CongestionTaxRequestDto request)
         {
-            TariffDefinition tariffDefinition = GenrateTariffDefination(request);
-
             //free tax
-            if (IsTollFreeVehicle(vehicleType: request.VehicleType, tariffDefinition: tariffDefinition))
+            if (IsTollFreeVehicle(vehicleType: request.VehicleType))
                 return 0;
 
             if (request.TrafficTimeSequence == null || request.TrafficTimeSequence.Count() == 0)
@@ -106,7 +88,7 @@ namespace CongestionTaxCalculator.Application
             List<DateTime> sequenceList = new List<DateTime>();
             foreach (var item in request.TrafficTimeSequence)
             {
-                if (!IsTollFreeDate(date: item, tariffDefinition))
+                if (!IsTollFreeDate(date: item))
                     sequenceList.Add(item);
             }
 
@@ -118,16 +100,16 @@ namespace CongestionTaxCalculator.Application
                 DateTime entrance = sequenceList[start];
                 if (oneDayPass.Contains(DateOnly.FromDateTime(entrance)))
                     continue;
-                Decimal tax = GetTaxRule(entrance, tariffDefinition);
+                Decimal tax = GetTaxRule(entrance);
                 for (int end = start + 1; end < sequenceList.Count(); end++)
                 {
                     DateTime exit = sequenceList[end];
                     TimeSpan duration = exit.Subtract(entrance);
                     var durationInMinute = duration.TotalMinutes;
-                    if (durationInMinute < tariffDefinition.TariffSetting.SingleCharegeInterval)
+                    if (durationInMinute < _tariffDefinition.TariffSetting.SingleCharegeInterval)
                     {
                         oneDayPass.Add(DateOnly.FromDateTime(exit));
-                        Decimal tax2 = GetTaxRule(exit, tariffDefinition);
+                        Decimal tax2 = GetTaxRule(exit);
                         if (tax2 > tax)
                             tax = tax2;
                     }
@@ -136,18 +118,18 @@ namespace CongestionTaxCalculator.Application
                 }//end end for 
 
                 if (taxPerDay.ContainsKey(DateOnly.FromDateTime(entrance)))
-                    taxPerDay.Add(DateOnly.FromDateTime(entrance), new List<decimal>() { tax });
+                    taxPerDay[DateOnly.FromDateTime(entrance)].Add(tax);                
                 else
-                    taxPerDay[DateOnly.FromDateTime(entrance)].Add(tax);
+                    taxPerDay.Add(DateOnly.FromDateTime(entrance), new List<decimal>() { tax });
             }//end start for
 
             Decimal totalTax = 0;
             foreach (KeyValuePair<DateOnly, List<Decimal>> taxday in taxPerDay)
             {
                 Decimal tatalTaxPerDay = taxday.Value.Sum();
-                if (tatalTaxPerDay > tariffDefinition.TariffSetting.MaxTaxAmount)
+                if (tatalTaxPerDay > _tariffDefinition.TariffSetting.MaxTaxAmount)
                 {
-                    tatalTaxPerDay = tariffDefinition.TariffSetting.MaxTaxAmount;
+                    tatalTaxPerDay = _tariffDefinition.TariffSetting.MaxTaxAmount;
                     taxday.Value.Clear();
                     taxday.Value.Add(tatalTaxPerDay);
                 }
