@@ -94,21 +94,21 @@ namespace CongestionTaxCalculator.Application
 
 
             Dictionary<DateOnly, List<Decimal>> taxPerDay = new Dictionary<DateOnly, List<Decimal>>();
-            List<TimeOnly> oneDayPass = new List<TimeOnly>();
+            List<DateOnly> oneDayPass = new List<DateOnly>();
             for (int start = 0; start < sequenceList.Count() - 1; start++)
             {
                 DateTime entrance = sequenceList[start];
-                if (oneDayPass.Contains(TimeOnly.FromDateTime(entrance)))
+                if (oneDayPass.Contains(DateOnly.FromDateTime(entrance)))
                     continue;
                 Decimal tax = GetTaxRule(entrance);
                 for (int end = start + 1; end < sequenceList.Count(); end++)
                 {
                     DateTime exit = sequenceList[end];
-                    TimeSpan duration = exit.Subtract(entrance);
+                    TimeSpan duration = exit.TimeOfDay.Subtract(entrance.TimeOfDay);
                     var durationInMinute = duration.TotalMinutes;
                     if (durationInMinute < _tariffDefinition.TariffSetting.SingleCharegeInterval)
                     {
-                        oneDayPass.Add(TimeOnly.FromDateTime(exit));
+                        oneDayPass.Add(DateOnly.FromDateTime(exit));
                         Decimal tax2 = GetTaxRule(exit);
                         if (tax2 > tax)
                             tax = tax2;
