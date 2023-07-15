@@ -7,8 +7,7 @@ namespace CongestionTaxCalculator.Infrastructure
     { 
         public static List<DateTime> sortDateDesc(List<DateTime> datetimes)
         {
-            datetimes.OrderByDescending(x => x.Date).ThenBy(x => x.Hour).ThenBy(x=>x.Minute).ThenBy(x => x.Second).ToList();
-            return datetimes;
+            return datetimes.OrderBy(x => x.Date).ThenBy(t => t.TimeOfDay).ToList();
         }
     }
 
@@ -31,7 +30,7 @@ namespace CongestionTaxCalculator.Infrastructure
 
         public bool InRange(TimeOnly time)
         {
-            return Start < time && time<End;
+            return Start <= time && time<End;
         }
 
     }
